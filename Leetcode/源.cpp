@@ -1193,7 +1193,7 @@ public:
 			}
 		}
 		//BFS
-		return 1;
+		return 0;
 	} 
 
 };
@@ -1208,4 +1208,11 @@ int main() {
 	Solution t;
 	cout<<t.ladderLength(beginword, endword, wordlist);
 }
+
+
+
+
+
+
+
 

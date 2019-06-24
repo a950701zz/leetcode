@@ -1206,67 +1206,108 @@ typedef unsigned __int32 uint32_t;
 //		return s == t ? true : false;
 //	}
 //};
-const int Maxn = 26;
-class Trie {
+
+
+//
+//const int Maxn = 26;
+//class Trie {
+//public:
+//	/** Initialize your data structure here. */
+//	bool is_str;//标识当前节点是否是一个完整的字符串
+//	Trie *next[Maxn];  //指向Trie的指针数组
+//	Trie() {
+//		is_str = NULL;
+//		memset(next, 0, sizeof(next)); //初始化指针数组
+//	}
+//
+//	/** Inserts a word into the trie. */
+//	void insert(string word) {
+//		Trie *cur = this; //首先指向当前节点
+//		for (char w : word)
+//		{
+//			if (cur->next[w - 'a'] == NULL)  //当前节点没有指向当前字符w的分支，要新建节点
+//			{
+//				Trie *new_node = new Trie();
+//				cur->next[w - 'a'] = new_node;
+//			}
+//			cur = cur->next[w - 'a'];//每一次都会遍历一个分支，节点指向下一个字符
+//		}
+//		cur->is_str = true;//指向最末尾的字符了，当前节点处是一个完整的单词
+//	}
+//
+//	/** Returns if the word is in the trie. */
+//	bool search(string word) {
+//		Trie *cur = this;
+//		for (char w : word)
+//		{
+//			if (cur->next[w - 'a'] == NULL)
+//			{
+//				return false;
+//			}
+//			cur = cur->next[w - 'a'];
+//		}
+//		return (cur->is_str);
+//	}
+//
+//	/** Returns if there is any word in the trie that starts with the given prefix. */
+//	bool startsWith(string prefix) {
+//		Trie * cur = this;
+//		for (char w : prefix)
+//		{
+//			if (cur->next[w - 'a'] == NULL)
+//				return false;
+//			cur = cur->next[w - 'a'];
+//		}
+//		return (cur != NULL);
+//	}
+//};
+
+class Solution {
 public:
-	/** Initialize your data structure here. */
-	bool is_str;//标识当前节点是否是一个完整的字符串
-	Trie *next[Maxn];  //指向Trie的指针数组
-	Trie() {
-		is_str = NULL;
-		memset(next, 0, sizeof(next)); //初始化指针数组
-	}
-
-	/** Inserts a word into the trie. */
-	void insert(string word) {
-		Trie *cur = this; //首先指向当前节点
-		for (char w : word)
+	int titleToNumber(string s) {
+		int len = s.length(); int rst = 0;
+		for (int i = 0; i < s.length();i++)
 		{
-			if (cur->next[w - 'a'] == NULL)  //当前节点没有指向当前字符w的分支，要新建节点
+			char a= s[i];
+			switch (a)
 			{
-				Trie *new_node = new Trie();
-				cur->next[w - 'a'] = new_node;
+			case 'A': rst += 1 * pow(26, len - i - 1); break;
+			case 'B': rst += 2 * pow(26, len - i - 1); break;
+			case 'C': rst += 3 * pow(26, len - i - 1); break;
+			case 'D': rst += 4 * pow(26, len - i - 1); break;
+			case 'E': rst += 5 * pow(26, len - i - 1); break;
+			case 'F': rst += 6 * pow(26, len - i - 1); break;
+			case 'G': rst += 7 * pow(26, len - i - 1); break;
+			case 'H': rst += 8 * pow(26, len - i - 1); break;
+			case 'I': rst += 9 * pow(26, len - i - 1); break;
+			case 'J': rst += 10 * pow(26, len - i - 1); break;
+			case 'K': rst += 11 * pow(26, len - i - 1); break;
+			case 'L': rst += 12 * pow(26, len - i - 1); break;
+			case 'M': rst += 13 * pow(26, len - i - 1); break;
+			case 'N': rst += 14 * pow(26, len - i - 1); break;
+			case 'O': rst += 15 * pow(26, len - i - 1); break;
+			case 'P': rst += 16 * pow(26, len - i - 1); break;
+			case 'Q': rst += 17 * pow(26, len - i - 1); break;
+			case 'R': rst += 18 * pow(26, len - i - 1); break;
+			case 'S': rst += 19 * pow(26, len - i - 1); break;
+			case 'T': rst += 20 * pow(26, len - i - 1); break;
+			case 'U': rst += 21 * pow(26, len - i - 1); break;
+			case 'V': rst += 22 * pow(26, len - i - 1); break;
+			case 'W': rst += 23 * pow(26, len - i - 1); break;
+			case 'X': rst += 24 * pow(26, len - i - 1); break;
+			case 'Y': rst += 25 * pow(26, len - i - 1); break;
+			case 'Z': rst += 26 * pow(26, len - i - 1); break;
+			default:
+				break;
 			}
-			cur = cur->next[w - 'a'];//每一次都会遍历一个分支，节点指向下一个字符
 		}
-		cur->is_str = true;//指向最末尾的字符了，当前节点处是一个完整的单词
-	}
-
-	/** Returns if the word is in the trie. */
-	bool search(string word) {
-		Trie *cur = this;
-		for (char w : word)
-		{
-			if (cur->next[w - 'a'] == NULL)
-			{
-				return false;
-			}
-			cur = cur->next[w - 'a'];
-		}
-		return (cur->is_str);
-	}
-
-	/** Returns if there is any word in the trie that starts with the given prefix. */
-	bool startsWith(string prefix) {
-		Trie * cur = this;
-		for (char w : prefix)
-		{
-			if (cur->next[w - 'a'] == NULL)
-				return false;
-			cur = cur->next[w - 'a'];
-		}
-		return (cur != NULL);
+		return rst;
 	}
 };
 
 int main() {
-	Trie* trie = new Trie();
-	trie->insert("apple");
-	cout << trie->search("apple");   // 返回 true
-	cout << trie->search("app");     // 返回 false
-	cout << trie->startsWith("app");
-	trie->insert("app");
-	cout << trie->search("app");     // 返回 true
+	Solution t;
+	cout << t.titleToNumber("ZY");
 	return 0;
 }
 

@@ -1136,77 +1136,80 @@ typedef unsigned __int32 uint32_t;
 //	}
 //};
 
+//class Solution {
+//public:
+//	int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+//		int len = beginWord.length();
+//		map<string, vector<string>> allComboDict;
+//		map<string, bool> visited;
+//		for (int j = 0; j < wordList.size();j++)
+//		{
+//			string word = wordList[j];
+//			for (int i = 0; i < len; i++)
+//			{
+//				string newword = word.substr(0, i) + "*" + word.substr(i + 1, len - (i + 1));
+//				allComboDict[word].push_back(newword);
+//			}
+//			visited[word]= false;
+//		}
+//		//Queue for BFS
+//		queue<pair<string, int>> Q;
+//		pair<string, int> a (beginWord, 1);
+//		Q.push(pair<string, int> (beginWord, 1));
+//		//a visited map
+//		
+//		visited[beginWord] = true;
+//		while (!Q.empty())   //BFS终止循环条件，队列为空
+//		{
+//			pair<string, int>node = Q.front();
+//			Q.pop();
+//			string currentword = node.first;  //节点的string
+//			int level = node.second;   //节点的level
+//			for (int i = 0; i < len; i++)
+//			{
+//				string intermediate = currentword.substr(0, i) + "*" + currentword.substr(i + 1, len - (i + 1));
+//				map<string, vector<string>>::iterator it = allComboDict.begin();
+//				while (it != allComboDict.end())
+//				{
+//					for (int j = 0; j < (it->second).size();j++)
+//					{
+//						string intermediate1 = it->second[j];
+//						if (intermediate == intermediate1)  //找到了联通的字段
+//						{
+//							if (it->first == endWord)
+//								return level + 1;
+//							else
+//								if (visited[it->first] == false)  //没访问过
+//								{
+//									visited[it->first] = true;
+//									Q.push(pair<string,int>(it->first, level + 1));
+//								}
+//							continue;
+//						}
+//						
+//					}
+//					it++;
+//				}
+//			}
+//		}
+//		//BFS
+//		return 0;
+//	} 
+//
+//};
+
 class Solution {
 public:
-	int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
-		int len = beginWord.length();
-		map<string, vector<string>> allComboDict;
-		map<string, bool> visited;
-		for (int j = 0; j < wordList.size();j++)
-		{
-			string word = wordList[j];
-			for (int i = 0; i < len; i++)
-			{
-				string newword = word.substr(0, i) + "*" + word.substr(i + 1, len - (i + 1));
-				allComboDict[word].push_back(newword);
-			}
-			visited[word]= false;
-		}
-		//Queue for BFS
-		queue<pair<string, int>> Q;
-		pair<string, int> a (beginWord, 1);
-		Q.push(pair<string, int> (beginWord, 1));
-		//a visited map
-		
-		visited[beginWord] = true;
-		while (!Q.empty())   //BFS终止循环条件，队列为空
-		{
-			pair<string, int>node = Q.front();
-			Q.pop();
-			string currentword = node.first;  //节点的string
-			int level = node.second;   //节点的level
-			for (int i = 0; i < len; i++)
-			{
-				string intermediate = currentword.substr(0, i) + "*" + currentword.substr(i + 1, len - (i + 1));
-				map<string, vector<string>>::iterator it = allComboDict.begin();
-				while (it != allComboDict.end())
-				{
-					for (int j = 0; j < (it->second).size();j++)
-					{
-						string intermediate1 = it->second[j];
-						if (intermediate == intermediate1)  //找到了联通的字段
-						{
-							if (it->first == endWord)
-								return level + 1;
-							else
-								if (visited[it->first] == false)  //没访问过
-								{
-									visited[it->first] = true;
-									Q.push(pair<string,int>(it->first, level + 1));
-								}
-							continue;
-						}
-						
-					}
-					it++;
-				}
-			}
-		}
-		//BFS
-		return 0;
-	} 
-
+	bool isAnagram(string s, string t) {
+		sort(s.begin(), s.end());
+		sort(t.begin(), t.end());
+		return s == t ? true : false;
+	}
 };
 
 
-
-
 int main() {
-	string beginword = "hit";
-	string endword = "cog";
-	vector<string> wordlist = { "hot", "dot", "dog", "lot", "log", "cog" };
-	Solution t;
-	cout<<t.ladderLength(beginword, endword, wordlist);
+	
 }
 
 

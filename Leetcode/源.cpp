@@ -1198,18 +1198,76 @@ typedef unsigned __int32 uint32_t;
 //
 //};
 
-class Solution {
+//class Solution {
+//public:
+//	bool isAnagram(string s, string t) {
+//		sort(s.begin(), s.end());
+//		sort(t.begin(), t.end());
+//		return s == t ? true : false;
+//	}
+//};
+const int Maxn = 26;
+class Trie {
 public:
-	bool isAnagram(string s, string t) {
-		sort(s.begin(), s.end());
-		sort(t.begin(), t.end());
-		return s == t ? true : false;
+	/** Initialize your data structure here. */
+	bool is_str;//标识当前节点是否是一个完整的字符串
+	Trie *next[Maxn];  //指向Trie的指针数组
+	Trie() {
+		is_str = NULL;
+		memset(next, 0, sizeof(next)); //初始化指针数组
+	}
+
+	/** Inserts a word into the trie. */
+	void insert(string word) {
+		Trie *cur = this; //首先指向当前节点
+		for (char w : word)
+		{
+			if (cur->next[w - 'a'] == NULL)  //当前节点没有指向当前字符w的分支，要新建节点
+			{
+				Trie *new_node = new Trie();
+				cur->next[w - 'a'] = new_node;
+			}
+			cur = cur->next[w - 'a'];//每一次都会遍历一个分支，节点指向下一个字符
+		}
+		cur->is_str = true;//指向最末尾的字符了，当前节点处是一个完整的单词
+	}
+
+	/** Returns if the word is in the trie. */
+	bool search(string word) {
+		Trie *cur = this;
+		for (char w : word)
+		{
+			if (cur->next[w - 'a'] == NULL)
+			{
+				return false;
+			}
+			cur = cur->next[w - 'a'];
+		}
+		return (cur->is_str);
+	}
+
+	/** Returns if there is any word in the trie that starts with the given prefix. */
+	bool startsWith(string prefix) {
+		Trie * cur = this;
+		for (char w : prefix)
+		{
+			if (cur->next[w - 'a'] == NULL)
+				return false;
+			cur = cur->next[w - 'a'];
+		}
+		return (cur != NULL);
 	}
 };
 
-
 int main() {
-	
+	Trie* trie = new Trie();
+	trie->insert("apple");
+	cout << trie->search("apple");   // 返回 true
+	cout << trie->search("app");     // 返回 false
+	cout << trie->startsWith("app");
+	trie->insert("app");
+	cout << trie->search("app");     // 返回 true
+	return 0;
 }
 
 

@@ -1,35 +1,8 @@
-﻿生成启动时间为 2019/6/24 15:29:34。
+﻿生成启动时间为 2019/6/25 9:43:55。
      1>项目“E:\OpenCVMT\UAVDetectingAndTracking\Leetcode\Leetcode\Leetcode.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
          E:\VS2013\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt "源.cpp"
          源.cpp
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1269): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1274): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1275): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1276): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1277): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1278): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1279): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1280): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1281): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1282): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1283): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1284): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1285): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1286): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1287): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1288): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1289): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1290): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1291): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1292): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1293): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1294): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1295): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1296): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1297): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1298): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1299): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
        Link:
          E:\VS2013\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\OpenCVMT\UAVDetectingAndTracking\Leetcode\Debug\Leetcode.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\OpenCVMT\UAVDetectingAndTracking\Leetcode\Debug\Leetcode.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\OpenCVMT\UAVDetectingAndTracking\Leetcode\Debug\Leetcode.lib" /MACHINE:X86 "Debug\源.obj"
          Leetcode.vcxproj -> E:\OpenCVMT\UAVDetectingAndTracking\Leetcode\Debug\Leetcode.exe
@@ -37,4 +10,4 @@
 
 生成成功。
 
-已用时间 00:00:00.82
+已用时间 00:00:01.35

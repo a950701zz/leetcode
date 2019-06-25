@@ -1262,52 +1262,105 @@ typedef unsigned __int32 uint32_t;
 //	}
 //};
 
-class Solution {
-public:
-	int titleToNumber(string s) {
-		int len = s.length(); int rst = 0;
-		for (int i = 0; i < s.length();i++)
-		{
-			char a= s[i];
-			switch (a)
-			{
-			case 'A': rst += 1 * pow(26, len - i - 1); break;
-			case 'B': rst += 2 * pow(26, len - i - 1); break;
-			case 'C': rst += 3 * pow(26, len - i - 1); break;
-			case 'D': rst += 4 * pow(26, len - i - 1); break;
-			case 'E': rst += 5 * pow(26, len - i - 1); break;
-			case 'F': rst += 6 * pow(26, len - i - 1); break;
-			case 'G': rst += 7 * pow(26, len - i - 1); break;
-			case 'H': rst += 8 * pow(26, len - i - 1); break;
-			case 'I': rst += 9 * pow(26, len - i - 1); break;
-			case 'J': rst += 10 * pow(26, len - i - 1); break;
-			case 'K': rst += 11 * pow(26, len - i - 1); break;
-			case 'L': rst += 12 * pow(26, len - i - 1); break;
-			case 'M': rst += 13 * pow(26, len - i - 1); break;
-			case 'N': rst += 14 * pow(26, len - i - 1); break;
-			case 'O': rst += 15 * pow(26, len - i - 1); break;
-			case 'P': rst += 16 * pow(26, len - i - 1); break;
-			case 'Q': rst += 17 * pow(26, len - i - 1); break;
-			case 'R': rst += 18 * pow(26, len - i - 1); break;
-			case 'S': rst += 19 * pow(26, len - i - 1); break;
-			case 'T': rst += 20 * pow(26, len - i - 1); break;
-			case 'U': rst += 21 * pow(26, len - i - 1); break;
-			case 'V': rst += 22 * pow(26, len - i - 1); break;
-			case 'W': rst += 23 * pow(26, len - i - 1); break;
-			case 'X': rst += 24 * pow(26, len - i - 1); break;
-			case 'Y': rst += 25 * pow(26, len - i - 1); break;
-			case 'Z': rst += 26 * pow(26, len - i - 1); break;
-			default:
-				break;
-			}
-		}
-		return rst;
-	}
+//class Solution {
+//public:
+//	int titleToNumber(string s) {
+//		int len = s.length(); int rst = 0;
+//		for (int i = 0; i < s.length();i++)
+//		{
+//			char a= s[i];
+//			switch (a)
+//			{
+//			case 'A': rst += 1 * pow(26, len - i - 1); break;
+//			case 'B': rst += 2 * pow(26, len - i - 1); break;
+//			case 'C': rst += 3 * pow(26, len - i - 1); break;
+//			case 'D': rst += 4 * pow(26, len - i - 1); break;
+//			case 'E': rst += 5 * pow(26, len - i - 1); break;
+//			case 'F': rst += 6 * pow(26, len - i - 1); break;
+//			case 'G': rst += 7 * pow(26, len - i - 1); break;
+//			case 'H': rst += 8 * pow(26, len - i - 1); break;
+//			case 'I': rst += 9 * pow(26, len - i - 1); break;
+//			case 'J': rst += 10 * pow(26, len - i - 1); break;
+//			case 'K': rst += 11 * pow(26, len - i - 1); break;
+//			case 'L': rst += 12 * pow(26, len - i - 1); break;
+//			case 'M': rst += 13 * pow(26, len - i - 1); break;
+//			case 'N': rst += 14 * pow(26, len - i - 1); break;
+//			case 'O': rst += 15 * pow(26, len - i - 1); break;
+//			case 'P': rst += 16 * pow(26, len - i - 1); break;
+//			case 'Q': rst += 17 * pow(26, len - i - 1); break;
+//			case 'R': rst += 18 * pow(26, len - i - 1); break;
+//			case 'S': rst += 19 * pow(26, len - i - 1); break;
+//			case 'T': rst += 20 * pow(26, len - i - 1); break;
+//			case 'U': rst += 21 * pow(26, len - i - 1); break;
+//			case 'V': rst += 22 * pow(26, len - i - 1); break;
+//			case 'W': rst += 23 * pow(26, len - i - 1); break;
+//			case 'X': rst += 24 * pow(26, len - i - 1); break;
+//			case 'Y': rst += 25 * pow(26, len - i - 1); break;
+//			case 'Z': rst += 26 * pow(26, len - i - 1); break;
+//			default:
+//				break;
+//			}
+//		}
+//		return rst;
+//	}
+//};
+
+struct BSTNode{
+	int val;  //当前值
+	//int count;  //在nums中比val小的数的个数
+	BSTNode *left; //左子树指针
+	BSTNode *right; // 右子树指针
+	BSTNode(int x) :val(x), left(NULL), right(NULL){};
 };
 
+void BST_insert(BSTNode *node, BSTNode *insert_node, int &count_small)  
+{
+	//从node节点开始插入新的insert_node节点
+	if (node->val >= insert_node->val)    //新节点小于等于旧节点
+	{
+		/*node->count++; */ //比当前节点小的节点个数要自增
+		if (node->left)   //新节点插入到左边
+			BST_insert(node->left, insert_node, count_small);
+		else
+			node->left = insert_node;
+		//插入的节点比当前节点要小，
+	}
+	else
+	{
+		count_small ++;
+		if (node->right)  //当前节点的右子树不为空
+			BST_insert(node->right, insert_node, count_small);
+		else
+			//右子树是空
+			node->right = insert_node;
+	}
+}
+
+class Solution{
+public: 
+	vector<int> countSmaller(vector<int> &nums)
+	{
+		int n = nums.size();
+		if (n == 0) return{}; //返回空的时候返回的是一个数组，用大括号表示
+		vector<int>  count;  // 保存最后结果的vector
+		count.push_back(0); // 最后一个元素值为0
+		BSTNode *node = new BSTNode(nums[n - 1]);  //树有n-1个节点,node是val为nums[n-1]的节点
+		int count_small;
+		for (int i = 1; i < n; i++)
+		{
+			count_small = 0; //每一次都从nums[n-1]的节点开始插入新的节点
+			BST_insert(node, new BSTNode(nums[n - i - 1]), count_small);//插入nums[n-i-1]个元素到二叉树中
+			count.push_back(count_small);
+		}
+		delete node;
+		reverse(count.begin(), count.end());
+		return count;
+	}
+};
 int main() {
 	Solution t;
-	cout << t.titleToNumber("ZY");
+	vector<int> nums = { 5, 2, 6, 1 };
+    t.countSmaller(nums);
 	return 0;
 }
 

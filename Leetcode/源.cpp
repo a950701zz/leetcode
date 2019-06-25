@@ -1374,34 +1374,78 @@ typedef unsigned __int32 uint32_t;
 //	}
 //};
 
+//class Solution {
+//public:
+//	//慢快指针的基本思想就是两个指针之差始终为慢指针所走的路程，两指针相遇以后，慢指针一定走了整数倍的环长度
+//	// 因为初始走了m步，m是从起点到环的距离，所以此时慢指针再走m步就到了环的起点
+//	// 此时让快指针从头走，走m步后也到环起点，两指针相遇，环起点也就是重复的数。
+//	int findDuplicate(vector<int>& nums) {
+//		int fast = nums[0];
+//		int slow = nums[0];  //把nums[0]当做起始位置，再指针相遇时要回到nums[0]
+//		do 
+//		{
+//			slow = nums[slow];  //走一步
+//			fast = nums[nums[fast]]; //向前走两步
+//		} while (fast!=slow);
+//
+//		// 相遇后快指针回到起点
+//		fast = nums[0];
+//		while (fast != slow)  //如果已经相遇，那么直接返回，不能用do while
+//		{
+//			fast = nums[fast];
+//			slow = nums[slow];
+//		} 
+//
+//		return fast;
+//	}
+//};
 class Solution {
 public:
-	int findDuplicate(vector<int>& nums) {
-		int fast = nums[0];
-		int slow = nums[0];  //把nums[0]当做起始位置，再指针相遇时要回到nums[0]
-		do 
+	int numIslands(vector<vector<char>>& grid) {
+		vector<vector<bool>> visited(grid.size(), vector<bool>(grid[0].size(), false));
+		int x = grid.size(), y = grid[0].size(); int res = 0;
+		for (int i = 0; i < x;i++)
 		{
-			slow = nums[slow];  //走一步
-			fast = nums[nums[fast]]; //向前走两步
-		} while (fast!=slow);
+			for (int j = 0; j < y;j++)
+			{
+				if (grid[i][j]=='1')
+				{
+					res++; BFS(grid, i, j, visited);
+				}
+			}
+		}
+		return res;
+	}
 
-		// 相遇后快指针回到起点
-		fast = nums[0];
-		while (fast != slow)  //如果已经相遇，那么直接返回，不能用do while
+	void BFS(vector<vector<char>>& grid, int xx, int yy, vector<vector<bool>>& visited)
+	{
+		int x = grid.size(); int y = grid[0].size();
+		//x是第一组vector y是第二组vector的index
+		if (xx < 0 || xx >= x || yy < 0 || yy >= y)  //访问越界，返回
+			return;
+		else
+			if (visited[xx][yy] == true || grid[xx][yy] == '0')  //不符合条件
+				return;
+		  else
 		{
-			fast = nums[fast];
-			slow = nums[slow];
-		} 
-
-		return fast;
+			grid[xx][yy] = '0';
+			visited[xx][yy] = true;//设置为访问过
+			BFS(grid, xx + 1, yy, visited);
+			BFS(grid, xx - 1, yy, visited);
+			BFS(grid, xx , yy + 1, visited);
+			BFS(grid, xx , yy - 1, visited);
+		}
 	}
 };
 
-
 int main() {
 	Solution t;
-	vector<int> nums = { 3,1,3,4,2 };
-	cout<<t.findDuplicate(nums);
+	vector<vector<char>> grid = { { '1', '1', '1', '1', '0' },
+	{ '1', '1', '0', '1', '0' },
+	{ '1', '1', '0', '0', '0' },
+	{ '0', '0', '0', '0', '0' },
+	};
+	cout << t.numIslands(grid);
 	return 0;
 }
 

@@ -1439,29 +1439,49 @@ typedef unsigned __int32 uint32_t;
 //		}
 //	}
 //};
+//class Solution {
+//public:  //三向切分看不懂，所以进阶不了。主要就是排序后注意放法 避免重复的数
+//	void wiggleSort(vector<int>& nums) {
+//		vector<int> copyed(nums);
+//		if (nums.size() == 0) return ;
+//		sort(copyed.begin(), copyed.end());
+//		int len = nums.size()-1;
+//		for (int i = 1; i < nums.size();i=i+2)
+//	           //奇数放大数 
+//				nums[i] = copyed[len--];
+//		
+//		for (int i = 0; i < nums.size(); i=i+2)
+//			 //偶数放小数 
+//			 nums[i] = copyed[len--];
+//	}
+//
+//};
+//
+
 class Solution {
 public:
-	void wiggleSort(vector<int>& nums) {
-		vector<int> copyed(nums);
-		sort(copyed.begin(), copyed.end());
-		int len = nums.size()-1;
-		for (int i = 1; i < nums.size();i=i+2)
-	           //奇数放大数 
-				nums[i] = copyed[len--];
+	bool increasingTriplet(vector<int>& nums) {
+		if (nums.size() < 3) return false;
+		int firstmin = INT_MAX, secondmin = INT_MAX;
+		for (int i = 0; i < nums.size(); i++)
+		{
+			if (nums[i]<firstmin) 
+				firstmin = nums[i];
+			else 
+				if (nums[i] = firstmin) continue;
+				else 
+					if (nums[i] < secondmin) secondmin = nums[i];
+					else if (nums[i] > secondmin) return true;
+			
 		
-		for (int i = 0; i < nums.size(); i=i+2)
-			 //偶数放小数 
-			 nums[i] = copyed[len--];
+		}
+		return false;
 	}
-
 };
-
-
-
 int main() {
 	Solution t;
-	vector<int> a = { 1, 5, 1, 1, 6, 4 };
-	t.wiggleSort(a);
+	vector<int> a = { 1,2,3,4,5};
+	t.increasingTriplet(a);
 	return 0;
 }
 

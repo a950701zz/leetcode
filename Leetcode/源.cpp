@@ -1399,53 +1399,69 @@ typedef unsigned __int32 uint32_t;
 //		return fast;
 //	}
 //};
+//class Solution {
+//public:
+//	int numIslands(vector<vector<char>>& grid) {
+//		if (grid.size()==0)
+//			return 0;
+//		vector<vector<bool>> visited(grid.size(), vector<bool>(grid[0].size(), false));
+//		int x = grid.size(), y = grid[0].size(); int res = 0;
+//		for (int i = 0; i < x;i++)
+//		{
+//			for (int j = 0; j < y;j++)
+//			{
+//				if (grid[i][j]=='1')
+//				{
+//					res++; BFS(grid, i, j, visited);
+//				}
+//			}
+//		}
+//		return res;
+//	}
+//
+//	void BFS(vector<vector<char>>& grid, int xx, int yy, vector<vector<bool>>& visited)
+//	{
+//		int x = grid.size(); int y = grid[0].size();
+//		//x是第一组vector y是第二组vector的index
+//		if (xx < 0 || xx >= x || yy < 0 || yy >= y)  //访问越界，返回
+//			return;
+//		else
+//			if (visited[xx][yy] == true || grid[xx][yy] == '0')  //不符合条件
+//				return;
+//		  else
+//		{
+//			grid[xx][yy] = '0';
+//			visited[xx][yy] = true;//设置为访问过
+//			BFS(grid, xx + 1, yy, visited);
+//			BFS(grid, xx - 1, yy, visited);
+//			BFS(grid, xx , yy + 1, visited);
+//			BFS(grid, xx , yy - 1, visited);
+//		}
+//	}
+//};
 class Solution {
 public:
-	int numIslands(vector<vector<char>>& grid) {
-		vector<vector<bool>> visited(grid.size(), vector<bool>(grid[0].size(), false));
-		int x = grid.size(), y = grid[0].size(); int res = 0;
-		for (int i = 0; i < x;i++)
-		{
-			for (int j = 0; j < y;j++)
-			{
-				if (grid[i][j]=='1')
-				{
-					res++; BFS(grid, i, j, visited);
-				}
-			}
-		}
-		return res;
+	void wiggleSort(vector<int>& nums) {
+		vector<int> copyed(nums);
+		sort(copyed.begin(), copyed.end());
+		int len = nums.size()-1;
+		for (int i = 1; i < nums.size();i=i+2)
+	           //奇数放大数 
+				nums[i] = copyed[len--];
+		
+		for (int i = 0; i < nums.size(); i=i+2)
+			 //偶数放小数 
+			 nums[i] = copyed[len--];
 	}
 
-	void BFS(vector<vector<char>>& grid, int xx, int yy, vector<vector<bool>>& visited)
-	{
-		int x = grid.size(); int y = grid[0].size();
-		//x是第一组vector y是第二组vector的index
-		if (xx < 0 || xx >= x || yy < 0 || yy >= y)  //访问越界，返回
-			return;
-		else
-			if (visited[xx][yy] == true || grid[xx][yy] == '0')  //不符合条件
-				return;
-		  else
-		{
-			grid[xx][yy] = '0';
-			visited[xx][yy] = true;//设置为访问过
-			BFS(grid, xx + 1, yy, visited);
-			BFS(grid, xx - 1, yy, visited);
-			BFS(grid, xx , yy + 1, visited);
-			BFS(grid, xx , yy - 1, visited);
-		}
-	}
 };
+
+
 
 int main() {
 	Solution t;
-	vector<vector<char>> grid = { { '1', '1', '1', '1', '0' },
-	{ '1', '1', '0', '1', '0' },
-	{ '1', '1', '0', '0', '0' },
-	{ '0', '0', '0', '0', '0' },
-	};
-	cout << t.numIslands(grid);
+	vector<int> a = { 1, 5, 1, 1, 6, 4 };
+	t.wiggleSort(a);
 	return 0;
 }
 

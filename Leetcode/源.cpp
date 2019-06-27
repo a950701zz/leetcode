@@ -1458,31 +1458,53 @@ typedef unsigned __int32 uint32_t;
 //};
 //
 
+//class Solution {
+//public:
+//	bool increasingTriplet(vector<int>& nums) {
+//		if (nums.size() < 3) return false;
+//		int firstmin = INT_MAX, secondmin = INT_MAX;
+//		for (int i = 0; i < nums.size(); i++)
+//		{
+//			if (nums[i]<firstmin) 
+//				firstmin = nums[i];
+//			else 
+//				if (nums[i] = firstmin) continue;
+//				else 
+//					if (nums[i] < secondmin) secondmin = nums[i];
+//					else if (nums[i] > secondmin) return true;
+//			
+//		
+//		}
+//		return false;
+//	}
+//};
+
+
+// 今天就做了两个二叉树，很快就学会了，完成了打卡，气死强哥，就是不给你买奶茶 haha~
+ struct TreeNode {
+     int val;
+     TreeNode *left;
+     TreeNode *right;
+     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ };
+ //对搜素二叉树中序遍历，实际上就是遍历得到了依次从小到大排列的节点值
 class Solution {
 public:
-	bool increasingTriplet(vector<int>& nums) {
-		if (nums.size() < 3) return false;
-		int firstmin = INT_MAX, secondmin = INT_MAX;
-		for (int i = 0; i < nums.size(); i++)
-		{
-			if (nums[i]<firstmin) 
-				firstmin = nums[i];
-			else 
-				if (nums[i] = firstmin) continue;
-				else 
-					if (nums[i] < secondmin) secondmin = nums[i];
-					else if (nums[i] > secondmin) return true;
-			
-		
-		}
-		return false;
+	vector<int>result;
+	int  kthSmallest(TreeNode* root,int k) {
+		if (root == NULL) return 0;
+		if (root->left != NULL)  //左边有访问左边
+			kthSmallest(root->left,1);
+		//左边没有，到它自己了，所以返回它的值后访问右边
+		result.push_back(root->val);
+		if (root->right != NULL) kthSmallest(root->right,1);
+		return result[k-1];
 	}
 };
+
+
 int main() {
-	Solution t;
-	vector<int> a = { 1,2,3,4,5};
-	t.increasingTriplet(a);
-	return 0;
+	
 }
 
 

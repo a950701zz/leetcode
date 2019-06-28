@@ -1503,33 +1503,52 @@ typedef unsigned __int32 uint32_t;
 //};
 
 
+
+
+////主要是这个递归的思路得先想到，要掌握大的思路不要纠结细枝末节，要不就绕不出来了。得多复习几次。
+//class Solution {
+//public:
+//	TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+//		if (root == p || root == q) return root;//找到了指定节点直接返回
+//		if (root == NULL) return NULL; //搜寻到最后都没有搜寻到，说明没找到，返回NULL
+//		//没有找到就要开始搜寻了,搜索左边
+//		TreeNode *left = lowestCommonAncestor(root->left, p, q);
+//		TreeNode *right = lowestCommonAncestor(root->right, p, q);
+//
+//		//中心原理
+//		if (left == NULL&&right ==NULL) //都没搜索到 
+//			return NULL;
+//		if (left != NULL&&right == NULL)  //左有右没有
+//			return left;
+//		if (left == NULL&&right != NULL)
+//			return right;
+//		else return root; //左有都有
+//	}
+//};
+
 struct TreeNode {
 	int val;
 	TreeNode *left;
 	TreeNode *right;
 	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-	
+
 };
 
-
-//主要是这个递归的思路得先想到，要掌握大的思路不要纠结细枝末节，要不就绕不出来了。得多复习几次。
 class Solution {
 public:
 	TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-		if (root == p || root == q) return root;//找到了指定节点直接返回
-		if (root == NULL) return NULL; //搜寻到最后都没有搜寻到，说明没找到，返回NULL
-		//没有找到就要开始搜寻了,搜索左边
-		TreeNode *left = lowestCommonAncestor(root->left, p, q);
-		TreeNode *right = lowestCommonAncestor(root->right, p, q);
-
-		//中心原理
-		if (left == NULL&&right ==NULL) //都没搜索到 
-			return NULL;
-		if (left != NULL&&right == NULL)  //左有右没有
-			return left;
-		if (left == NULL&&right != NULL)
-			return right;
-		else return root; //左有都有
+		if (root->val == p->val || root->val == q->val) return root;
+		else
+			if (root->val > p->val&&root->val > q->val) //都小于当前节点，肯定在右边
+			{
+				return lowestCommonAncestor(root->left, p, q);
+			}
+			else if (root->val < p->val&&root->val < q->val)
+			{
+				return lowestCommonAncestor(root->right, p, q);
+			}
+			else
+				return root;
 	}
 };
 int main() {

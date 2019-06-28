@@ -1480,29 +1480,58 @@ typedef unsigned __int32 uint32_t;
 //};
 
 
-// 今天就做了两个二叉树，很快就学会了，完成了打卡，气死强哥，就是不给你买奶茶 haha~
- struct TreeNode {
-     int val;
-     TreeNode *left;
-     TreeNode *right;
-     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- };
- //对搜素二叉树中序遍历，实际上就是遍历得到了依次从小到大排列的节点值
-class Solution {
-public:
-	vector<int>result;
-	int  kthSmallest(TreeNode* root,int k) {
-		if (root == NULL) return 0;
-		if (root->left != NULL)  //左边有访问左边
-			kthSmallest(root->left,1);
-		//左边没有，到它自己了，所以返回它的值后访问右边
-		result.push_back(root->val);
-		if (root->right != NULL) kthSmallest(root->right,1);
-		return result[k-1];
-	}
+//// 今天就做了两个二叉树，很快就学会了，完成了打卡，气死强哥，就是不给你买奶茶 haha~
+// struct TreeNode {
+//     int val;
+//     TreeNode *left;
+//     TreeNode *right;
+//     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+// };
+// //对搜素二叉树中序遍历，实际上就是遍历得到了依次从小到大排列的节点值
+//class Solution {
+//public:
+//	vector<int>result;
+//	int  kthSmallest(TreeNode* root,int k) {
+//		if (root == NULL) return 0;
+//		if (root->left != NULL)  //左边有访问左边
+//			kthSmallest(root->left,1);
+//		//左边没有，到它自己了，所以返回它的值后访问右边
+//		result.push_back(root->val);
+//		if (root->right != NULL) kthSmallest(root->right,1);
+//		return result[k-1];
+//	}
+//};
+
+
+struct TreeNode {
+	int val;
+	TreeNode *left;
+	TreeNode *right;
+	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+	
 };
 
 
+//主要是这个递归的思路得先想到，要掌握大的思路不要纠结细枝末节，要不就绕不出来了。得多复习几次。
+class Solution {
+public:
+	TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+		if (root == p || root == q) return root;//找到了指定节点直接返回
+		if (root == NULL) return NULL; //搜寻到最后都没有搜寻到，说明没找到，返回NULL
+		//没有找到就要开始搜寻了,搜索左边
+		TreeNode *left = lowestCommonAncestor(root->left, p, q);
+		TreeNode *right = lowestCommonAncestor(root->right, p, q);
+
+		//中心原理
+		if (left == NULL&&right ==NULL) //都没搜索到 
+			return NULL;
+		if (left != NULL&&right == NULL)  //左有右没有
+			return left;
+		if (left == NULL&&right != NULL)
+			return right;
+		else return root; //左有都有
+	}
+};
 int main() {
 	
 }

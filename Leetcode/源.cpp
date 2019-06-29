@@ -1556,42 +1556,66 @@ typedef unsigned __int32 uint32_t;
 //动态规划，把整个问题分为小的问题。dp[i]表示包含第i位为子序列的情况下最长的上升序列
 //所以下一状态就是 dp[i+1] 要更新，nums[i+1]就要依次和nums[i],nums[i-1]...nums[0]比较来更新dp[i+1]
 //做动态规划的时候，首先要把逻辑想清楚，再写代码。
+//class Solution {
+//public:
+//	int lengthOfLIS(vector<int>& nums) {
+//		int rst = 1; int median = 1;
+//		if (nums.size() == 0) return 0;
+//		vector<int> dp(nums.size(), 1);
+//		dp[0] = 1;
+//		for (int i = 1; i < nums.size();i++)
+//		{
+//			for (int j = i - 1; j >= 0;j--)
+//			{
+//				//遍历i-2到0,找到dp[i]
+//				if (nums[i] < nums[j]) median = 1;
+//				else 
+//					if (nums[i]>nums[j]) 
+//				{
+//					median = dp[j] + 1;
+//				}
+//				else
+//				{   //两数相等
+//					median = dp[j];
+//				}
+//				dp[i] = max(dp[i], median);
+//			}
+//			rst = max(rst, dp[i]);
+//		}
+//		return rst;
+//
+//	}
+//};
+
+struct TreeNode {
+	*int val;
+	*TreeNode *left;
+	TreeNode *right;
+	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
 class Solution {
 public:
-	int lengthOfLIS(vector<int>& nums) {
-		int rst = 1; int median = 1;
-		if (nums.size() == 0) return 0;
-		vector<int> dp(nums.size(), 1);
-		dp[0] = 1;
-		for (int i = 1; i < nums.size();i++)
-		{
-			for (int j = i - 1; j >= 0;j--)
-			{
-				//遍历i-2到0,找到dp[i]
-				if (nums[i] < nums[j]) median = 1;
-				else 
-					if (nums[i]>nums[j]) 
-				{
-					median = dp[j] + 1;
-				}
-				else
-				{   //两数相等
-					median = dp[j];
-				}
-				dp[i] = max(dp[i], median);
-			}
-			rst = max(rst, dp[i]);
+	int result;
+	int maxPathSum(TreeNode* root) {
+		result = INT_MIN;   // 考虑全部节点为负数的情况
+		getPath(root);
+		return result;
+	}
+	int getPath(TreeNode* node) {
+		if (node == NULL) {
+			return 0;
 		}
-		return rst;
-
+		int left = getPath(node->left);
+		int right = getPath(node->right);
+		int tmp = max(max(left + node->val, right + node->val), node->val); // 这三种情况是经过节点node且可以向上组合的，需要返回给上层使用
+		result = max(result, max(tmp, left + right + node->val));    // 不能向上组合的情况只需要用于更新结果，无需向上返回
+		return tmp;
 	}
 };
 
-
 int main() {
-	vector<int> test = { 1,3,6,7,9,4,10,5,6 };
-	Solution t;
-	cout << t.lengthOfLIS(test);
+
 }
 
 

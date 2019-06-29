@@ -1,14 +1,46 @@
-﻿生成启动时间为 2019/6/29 11:55:24。
+﻿生成启动时间为 2019/6/29 19:40:13。
      1>项目“E:\OpenCVMT\UAVDetectingAndTracking\Leetcode\Leetcode\Leetcode.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
          E:\VS2013\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt "源.cpp"
          源.cpp
-     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1566): warning C4018: “<”: 有符号/无符号不匹配
-       Link:
-         E:\VS2013\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\OpenCVMT\UAVDetectingAndTracking\Leetcode\Debug\Leetcode.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\OpenCVMT\UAVDetectingAndTracking\Leetcode\Debug\Leetcode.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\OpenCVMT\UAVDetectingAndTracking\Leetcode\Debug\Leetcode.lib" /MACHINE:X86 "Debug\源.obj"
-         Leetcode.vcxproj -> E:\OpenCVMT\UAVDetectingAndTracking\Leetcode\Debug\Leetcode.exe
-     1>已完成生成项目“E:\OpenCVMT\UAVDetectingAndTracking\Leetcode\Leetcode\Leetcode.vcxproj”(Build 个目标)的操作。
+     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1591): error C2062: 意外的类型“int”
+     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1591): error C2238: 意外的标记位于“;”之前
+     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1592): error C2143: 语法错误 : 缺少“;”(在“*”的前面)
+     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1592): error C2461: “TreeNode”: 构造函数语法缺少形参
+     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1592): error C4430: 缺少类型说明符 - 假定为 int。注意:  C++ 不支持默认 int
+     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1594): error C2614: “TreeNode”: 非法的成员初始化:“val”不是基或成员
+     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1594): error C2614: “TreeNode”: 非法的成员初始化:“left”不是基或成员
+     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1609): error C2039: “left”: 不是“TreeNode”的成员
+                 e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1590) : 参见“TreeNode”的声明
+     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1611): error C2039: “val”: 不是“TreeNode”的成员
+                 e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1590) : 参见“TreeNode”的声明
+                 e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1590) : 参见“TreeNode”的声明
+     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1611): error C2780: “_Ty std::max(std::initializer_list<_Elem>,_Pr)”: 应输入 2 个参数，却提供了 1 个
+                 e:\vs2013\vc\include\algorithm(4108) : 参见“std::max”的声明
+     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1611): error C2780: “const _Ty &std::max(const _Ty &,const _Ty &,_Pr)”: 应输入 3 个参数，却提供了 1 个
+                 e:\vs2013\vc\include\algorithm(4101) : 参见“std::max”的声明
+     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1611): error C2780: “const _Ty &std::max(const _Ty &,const _Ty &)”: 应输入 2 个参数，却提供了 1 个
+                 e:\vs2013\vc\include\algorithm(4086) : 参见“std::max”的声明
+                 e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1590) : 参见“TreeNode”的声明
+                 e:\vs2013\vc\include\algorithm(4108) : 参见“std::max”的声明
+                 e:\vs2013\vc\include\algorithm(4101) : 参见“std::max”的声明
+                 e:\vs2013\vc\include\algorithm(4086) : 参见“std::max”的声明
+     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1612): error C2039: “val”: 不是“TreeNode”的成员
+                 e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1590) : 参见“TreeNode”的声明
+     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1612): error C2780: “_Ty std::max(std::initializer_list<_Elem>,_Pr)”: 应输入 2 个参数，却提供了 1 个
+                 e:\vs2013\vc\include\algorithm(4108) : 参见“std::max”的声明
+     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1612): error C2780: “const _Ty &std::max(const _Ty &,const _Ty &,_Pr)”: 应输入 3 个参数，却提供了 1 个
+                 e:\vs2013\vc\include\algorithm(4101) : 参见“std::max”的声明
+     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1612): error C2784: “_Ty std::max(std::initializer_list<_Elem>)”: 未能从“int”为“std::initializer_list<_Elem>”推导 模板 参数
+                 e:\vs2013\vc\include\algorithm(4092) : 参见“std::max”的声明
+     1>e:\opencvmt\uavdetectingandtracking\leetcode\leetcode\源.cpp(1612): error C2780: “const _Ty &std::max(const _Ty &,const _Ty &)”: 应输入 2 个参数，却提供了 1 个
+                 e:\vs2013\vc\include\algorithm(4086) : 参见“std::max”的声明
+                 e:\vs2013\vc\include\algorithm(4108) : 参见“std::max”的声明
+                 e:\vs2013\vc\include\algorithm(4101) : 参见“std::max”的声明
+                 e:\vs2013\vc\include\algorithm(4092) : 参见“std::max”的声明
+                 e:\vs2013\vc\include\algorithm(4086) : 参见“std::max”的声明
+     1>已完成生成项目“E:\OpenCVMT\UAVDetectingAndTracking\Leetcode\Leetcode\Leetcode.vcxproj”(Build 个目标)的操作 - 失败。
 
-生成成功。
+生成失败。
 
-已用时间 00:00:00.96
+已用时间 00:00:00.82

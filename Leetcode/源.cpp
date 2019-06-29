@@ -1525,34 +1525,73 @@ typedef unsigned __int32 uint32_t;
 //		else return root; //左有都有
 //	}
 //};
+//
+//struct TreeNode {
+//	int val;
+//	TreeNode *left;
+//	TreeNode *right;
+//	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+//
+//};
+//
+//class Solution {
+//public:
+//	TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+//		if (root->val == p->val || root->val == q->val) return root;
+//		else
+//			if (root->val > p->val&&root->val > q->val) //都小于当前节点，肯定在右边
+//			{
+//				return lowestCommonAncestor(root->left, p, q);
+//			}
+//			else if (root->val < p->val&&root->val < q->val)
+//			{
+//				return lowestCommonAncestor(root->right, p, q);
+//			}
+//			else
+//				return root;
+//	}
+//};
 
-struct TreeNode {
-	int val;
-	TreeNode *left;
-	TreeNode *right;
-	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 
-};
-
+//动态规划，把整个问题分为小的问题。dp[i]表示包含第i位为子序列的情况下最长的上升序列
+//所以下一状态就是 dp[i+1] 要更新，nums[i+1]就要依次和nums[i],nums[i-1]...nums[0]比较来更新dp[i+1]
+//做动态规划的时候，首先要把逻辑想清楚，再写代码。
 class Solution {
 public:
-	TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-		if (root->val == p->val || root->val == q->val) return root;
-		else
-			if (root->val > p->val&&root->val > q->val) //都小于当前节点，肯定在右边
+	int lengthOfLIS(vector<int>& nums) {
+		int rst = 1; int median = 1;
+		if (nums.size() == 0) return 0;
+		vector<int> dp(nums.size(), 1);
+		dp[0] = 1;
+		for (int i = 1; i < nums.size();i++)
+		{
+			for (int j = i - 1; j >= 0;j--)
 			{
-				return lowestCommonAncestor(root->left, p, q);
+				//遍历i-2到0,找到dp[i]
+				if (nums[i] < nums[j]) median = 1;
+				else 
+					if (nums[i]>nums[j]) 
+				{
+					median = dp[j] + 1;
+				}
+				else
+				{   //两数相等
+					median = dp[j];
+				}
+				dp[i] = max(dp[i], median);
 			}
-			else if (root->val < p->val&&root->val < q->val)
-			{
-				return lowestCommonAncestor(root->right, p, q);
-			}
-			else
-				return root;
+			rst = max(rst, dp[i]);
+		}
+		return rst;
+
 	}
 };
+
+
 int main() {
-	
+	vector<int> test = { 1,3,6,7,9,4,10,5,6 };
+	Solution t;
+	cout << t.lengthOfLIS(test);
 }
 
 

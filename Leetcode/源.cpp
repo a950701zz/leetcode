@@ -1633,32 +1633,61 @@ typedef unsigned __int32 uint32_t;
 //第二个是外层循环，只要i+k>n，就不用了遍历了，这是第二个优化
 //第三个优化就是i = i+max_idx,这个我想了半天也没弄明白。
 // 因为我看了很久还没完全明白，这个题不想自己写了。
+//class Solution {
+//public:
+//	int longestSubstring(string s, int k) {
+//		int res = 0, i = 0, n = s.size();
+//		while (i + k <= n) {//关键
+//			int m[26] = { 0 }, mask = 0, max_idx = i;
+//			for (int j = i; j < n; ++j) {
+//				int t = s[j] - 'a';
+//				++m[t];
+//				if (m[t] < k) mask |= (1 << t);//关键
+//				else mask &= (~(1 << t));  //关键
+//				if (mask == 0) {
+//					res = max(res, j - i + 1);
+//					max_idx = j;
+//				}
+//			}
+//			i = i + max_idx; //没看懂，但是i++也能通过
+//		}
+//		return res;
+//	}
+//};
+
+//自己随便写的，其他更好方法就学习一下就不写了
 class Solution {
 public:
-	int longestSubstring(string s, int k) {
-		int res = 0, i = 0, n = s.size();
-		while (i + k <= n) {//关键
-			int m[26] = { 0 }, mask = 0, max_idx = i;
-			for (int j = i; j < n; ++j) {
-				int t = s[j] - 'a';
-				++m[t];
-				if (m[t] < k) mask |= (1 << t);//关键
-				else mask &= (~(1 << t));  //关键
-				if (mask == 0) {
-					res = max(res, j - i + 1);
-					max_idx = j;
+	int getSum(int a, int b) {
+		if (b == 0) return a;
+		else
+			if (b>0)
+			{
+				while ((b--)!=0)
+				{
+					a++;
+				}
+				return a;
+			}
+			else
+			{
+				if (b < 0)
+				{
+					while ((b++) != 0)
+					{
+						a--;
+					}
+					return a;
 				}
 			}
-			i = i + max_idx; //没看懂，但是i++也能通过
-		}
-		return res;
+		return a;
 	}
 };
 
 int main() {
 	Solution t;
 	string s = "aacbbbdc";
-	cout<<t.longestSubstring(s, 2);
+	cout << t.getSum(2, -22);
 }
 
 

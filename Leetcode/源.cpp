@@ -1587,35 +1587,78 @@ typedef unsigned __int32 uint32_t;
 //	}
 //};
 
-struct TreeNode {
-	*int val;
-	*TreeNode *left;
-	TreeNode *right;
-	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-};
+// 暴力解法，遍历子序列，并对每一个子序列进行判断是否满足条件，满足就判断size是否变大，记录最新的size
+// 但是有一组没有通过，超时了
+//class Solution {
+//public:
+//	int longestSubstring(string s, int k) {
+//		int rst = 0; int len = s.size();
+//		if (s.size() == 0) return 0;
+//		//map<int,int> times;
+//		for (int i = 0; i < len; i++)
+//		{
+//			map<int, int> times;
+//			times[s[i] - 'a']++; //记录当前字符个数
+//			for (int j = i + 1; j < len; j++)
+//			{
+//				//遍历从i到结尾，相当于遍历了所有的子串
+//				times[s[j] - 'a']++;
+//				if (iscorrect(times, k) == true)  //当前子串满足条件，记录大小;
+//				{
+//					rst = max(rst, j - i + 1);
+//				}
+//			}
+//		}
+//		if (k == 1)
+//			return rst > 1 ? rst : 1;
+//		else
+//			return rst;
+//	}
+//	bool inline iscorrect(map<int, int> times, int k)
+//	{
+//		int lenth = times.size();
+//		map<int, int>::iterator it = times.begin();
+//		while (it != times.end())
+//		{
+//			if (it->second < k) return false;
+//			it++;
+//		}
+//		return true;
+//	}
+//};
 
+//这个解法实际上也就是上面暴力的优化，我写的判断是否满足条件是对map进行访问，判断每个元素的出现次数
+//这个解法对这一个函数进行优化，就用一个int的掩膜，对每一位进行1或0的操作
+//掩膜为0的时候，也就是满足条件的时候，就避免了遍历
+//第二个是外层循环，只要i+k>n，就不用了遍历了，这是第二个优化
+//第三个优化就是i = i+max_idx,这个我想了半天也没弄明白。
+// 因为我看了很久还没完全明白，这个题不想自己写了。
 class Solution {
 public:
-	int result;
-	int maxPathSum(TreeNode* root) {
-		result = INT_MIN;   // 考虑全部节点为负数的情况
-		getPath(root);
-		return result;
-	}
-	int getPath(TreeNode* node) {
-		if (node == NULL) {
-			return 0;
+	int longestSubstring(string s, int k) {
+		int res = 0, i = 0, n = s.size();
+		while (i + k <= n) {//关键
+			int m[26] = { 0 }, mask = 0, max_idx = i;
+			for (int j = i; j < n; ++j) {
+				int t = s[j] - 'a';
+				++m[t];
+				if (m[t] < k) mask |= (1 << t);//关键
+				else mask &= (~(1 << t));  //关键
+				if (mask == 0) {
+					res = max(res, j - i + 1);
+					max_idx = j;
+				}
+			}
+			i = i + max_idx; //没看懂，但是i++也能通过
 		}
-		int left = getPath(node->left);
-		int right = getPath(node->right);
-		int tmp = max(max(left + node->val, right + node->val), node->val); // 这三种情况是经过节点node且可以向上组合的，需要返回给上层使用
-		result = max(result, max(tmp, left + right + node->val));    // 不能向上组合的情况只需要用于更新结果，无需向上返回
-		return tmp;
+		return res;
 	}
 };
 
 int main() {
-
+	Solution t;
+	string s = "aacbbbdc";
+	cout<<t.longestSubstring(s, 2);
 }
 
 

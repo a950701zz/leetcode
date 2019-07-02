@@ -1656,38 +1656,140 @@ typedef unsigned __int32 uint32_t;
 //};
 
 //自己随便写的，其他更好方法就学习一下就不写了
+//class Solution {
+//public:
+//	int getSum(int a, int b) {
+//		if (b == 0) return a;
+//		else
+//			if (b>0)
+//			{
+//				while ((b--)!=0)
+//				{
+//					a++;
+//				}
+//				return a;
+//			}
+//			else
+//			{
+//				if (b < 0)
+//				{
+//					while ((b++) != 0)
+//					{
+//						a--;
+//					}
+//					return a;
+//				}
+//			}
+//		return a;
+//	}
+////};
+//
+//class Solution {
+//public:
+//	int majorityElement(vector<int>& nums) {
+//		int counttimes = 1;
+//		if (nums.size() == 1) return nums[0];
+//		int majority = nums[0];
+//		for (int i = 1; i < nums.size();i++)
+//		{
+//			if (nums[i]==majority)
+//				counttimes++;
+//			else
+//			{
+//				if (counttimes ==0)
+//				{
+//					majority = nums[i];
+//					counttimes++;
+//				}
+//				else
+//				{//不为majority，countimes也不为0
+//					counttimes--;
+//				}
+//			}
+//			
+//		}
+//		return majority;
+//	}
+//};
+
+//代码很乱，可以简化就不简化了，今天主要是掌握了摩尔投票法的思路
 class Solution {
 public:
-	int getSum(int a, int b) {
-		if (b == 0) return a;
-		else
-			if (b>0)
+	vector<int> majorityElement(vector<int>& nums) {
+		int countx = 0, county = 0;
+		int majorityx = 0, majorityy = 0; vector<int>rst;
+		if (nums.size() == 0) return rst;
+		if (nums.size()==1)  
+		{
+			rst.push_back(nums[0]);
+			return rst;
+		}
+		else if (nums.size()==2)
+		{
+			if (nums[1] != nums[0])
 			{
-				while ((b--)!=0)
-				{
-					a++;
-				}
-				return a;
+				rst.push_back(nums[0]);
+				rst.push_back(nums[1]);
 			}
 			else
+				rst.push_back(nums[0]);
+			return rst;
+		}
+		for (int i = 0; i < nums.size();i++)
+		{
+			
+			if (countx==0&&nums[i]!=majorityy)
 			{
-				if (b < 0)
-				{
-					while ((b++) != 0)
-					{
-						a--;
-					}
-					return a;
-				}
+				majorityx = nums[i];
+				countx++;
 			}
-		return a;
+			else
+				if (nums[i] == majorityx)
+				{
+					countx++;
+				}
+				else//都不为0时
+					if (county == 0)
+					{
+						majorityy = nums[i];
+						county++;
+					}
+					else if (nums[i] == majorityy)
+					{
+						county++;
+					}
+					else
+					{
+						countx--; county--;
+					}
+		}
+		countx = 0; county = 0;
+		for (int i = 0; i < nums.size();i++)
+		{
+			if (majorityx==nums[i])
+			{
+				countx++;
+			}
+			else if (majorityy == nums[i])
+			{
+				county++;
+			}
+
+		}
+		if (countx>nums.size()/3)
+		{
+			rst.push_back(majorityx);
+		}
+		if (county > nums.size() / 3)
+		{
+			rst.push_back(majorityy);
+		}
+		return rst;
 	}
 };
 
 int main() {
-	Solution t;
-	string s = "aacbbbdc";
-	cout << t.getSum(2, -22);
+
 }
 
 

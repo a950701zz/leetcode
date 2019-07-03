@@ -1824,68 +1824,114 @@ typedef unsigned __int32 uint32_t;
 //所以要用一个stack来去保存遍历到的数字。 遍历到该乘法除法运算的时候，就把stack中的数字pop出来
 //运算了以后将乘法除法的结果push到stack中，最后stack元素相加即可。
 //有一些小的细节比如计算currentnum时要先-’0‘再+s[i],反过来有些数字会越界！
+//class Solution {
+//public:
+//	int calculate(string s) {
+//		int len = s.size();
+//		stack<int> nums;
+//		int currentnum = 0;
+//		int  rst = 0;
+//		char presign = '+'; //定义要计算时上一次的符号
+//		for (int i = 0; i < len;i++)
+//		{
+//			if (s[i] >= '0'&&s[i] <= '9') //取到的元素是数字
+//				currentnum = currentnum * 10 - '0' + s[i];//先加法的话会出界！采坑。
+//			
+//			if (s[i] < '0'&&s[i] != ' '||i==len-1)  //取到加减乘除表示当前的数字取完了，可以push到stack
+//			{
+//				if (presign == '+')
+//				{
+//					presign = s[i];
+//					nums.push(currentnum);
+//					currentnum = 0;
+//				}
+//				else if (presign == '-')
+//				{
+//					presign = s[i];
+//					nums.push(-currentnum);
+//					currentnum = 0;
+//				}
+//				else if (presign == '*')
+//				{
+//					presign = s[i];
+//					currentnum = nums.top()*currentnum;
+//					nums.pop();
+//					nums.push(currentnum);
+//					currentnum = 0;
+//				}
+//				else if (presign == '/')
+//				{
+//					presign = s[i];
+//					currentnum = nums.top()/currentnum;
+//					nums.pop();
+//					nums.push(currentnum);
+//					currentnum = 0;
+//				}
+//					
+//			}
+//		}
+//
+//		while (!nums.empty())
+//		{
+//			rst += nums.top();
+//			nums.pop();
+//		}
+//		return rst;
+//	}
+//};
+
+//每次快排结束后基准数的位置就代表着他是数组中第k大的数
+//这是快排序从大到小来排，利用快排序排完了以后返回的元素排的元素左边是大于他的 右边是小于他的
+//那这个数的下标是index的话 他不就是第index加1大的数？ 每次排完确定了一个第INDEX大的数
+//然后和k比较，可以确定新的数实在左边序列还是右边序列，再继续快排就好了
 class Solution {
 public:
-	int calculate(string s) {
-		int len = s.size();
-		stack<int> nums;
-		int currentnum = 0;
-		int  rst = 0;
-		char presign = '+'; //定义要计算时上一次的符号
-		for (int i = 0; i < len;i++)
+	int findKthLargest(vector<int>& nums, int k) {
+		int low = 0, high = nums.size() - 1, mid = 0;
+		while (low <= high)
 		{
-			if (s[i] >= '0'&&s[i] <= '9') //取到的元素是数字
-				currentnum = currentnum * 10 - '0' + s[i];//先加法的话会出界！采坑。
-			
-			if (s[i] < '0'&&s[i] != ' '||i==len-1)  //取到加减乘除表示当前的数字取完了，可以push到stack
+			mid = partation(nums, low, high);  //第mid+1大的数为nums[mid]
+			if (mid + 1 == k) return nums[mid];
+			else if (mid + 1 < k)  //在右边
 			{
-				if (presign == '+')
-				{
-					presign = s[i];
-					nums.push(currentnum);
-					currentnum = 0;
-				}
-				else if (presign == '-')
-				{
-					presign = s[i];
-					nums.push(-currentnum);
-					currentnum = 0;
-				}
-				else if (presign == '*')
-				{
-					presign = s[i];
-					currentnum = nums.top()*currentnum;
-					nums.pop();
-					nums.push(currentnum);
-					currentnum = 0;
-				}
-				else if (presign == '/')
-				{
-					presign = s[i];
-					currentnum = nums.top()/currentnum;
-					nums.pop();
-					nums.push(currentnum);
-					currentnum = 0;
-				}
-					
+				low = mid + 1; 
 			}
-		}
+			else
+			{
+				high = mid - 1;
+			}
 
-		while (!nums.empty())
-		{
-			rst += nums.top();
-			nums.pop();
 		}
-		return rst;
+		return 1;
+	}
+
+	int partation(vector<int> &nums, int low, int high) //low和high代表搜寻的范围
+	{
+		int left = low + 1, right = high;
+		int bound = nums[low];//参考比对数: bound
+		while (left <= right)
+		{
+			while (left < high && nums[left] > bound) left++;  //左指针向右，找到第一个比bound小的数后停下
+			while (nums[right] < bound &&right>low) right--;
+			if (left < right) swap(nums[left++], nums[right--]);
+			else break;
+		}
+		if (right < left)
+		{
+			swap(nums[low], nums[right]); return right;
+		}
+		else
+		{
+			swap(nums[low], nums[left]);
+			return left;  //返回的数也就是当前比对参数的坐标，把这个数第left+1大的数
+		}
 	}
 };
 
-
-
 int main() {
-	string s = "3+5/2";
+	vector<int> test = { 3, 2, 1, 5, 6, 4 };
 	Solution t;
-	cout << t.calculate("999 * 111 + 999 * 111");
+	cout << t.findKthLargest(test,2);
 	return 1;
 }
 

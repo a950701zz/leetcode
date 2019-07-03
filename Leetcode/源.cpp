@@ -6,7 +6,7 @@
 #include "string"
 #include <set>
 #include<queue>
-
+#include <stack>
 using namespace std;
 typedef unsigned __int8 uint8_t;
 typedef unsigned __int32 uint32_t;
@@ -1713,83 +1713,180 @@ typedef unsigned __int32 uint32_t;
 //};
 
 //代码很乱，可以简化就不简化了，今天主要是掌握了摩尔投票法的思路
+//class Solution {
+//public:
+//	vector<int> majorityElement(vector<int>& nums) {
+//		int countx = 0, county = 0;
+//		int majorityx = 0, majorityy = 0; vector<int>rst;
+//		if (nums.size() == 0) return rst;
+//		if (nums.size()==1)  
+//		{
+//			rst.push_back(nums[0]);
+//			return rst;
+//		}
+//		else if (nums.size()==2)
+//		{
+//			if (nums[1] != nums[0])
+//			{
+//				rst.push_back(nums[0]);
+//				rst.push_back(nums[1]);
+//			}
+//			else
+//				rst.push_back(nums[0]);
+//			return rst;
+//		}
+//		for (int i = 0; i < nums.size();i++)
+//		{
+//			
+//			if (countx==0&&nums[i]!=majorityy)
+//			{
+//				majorityx = nums[i];
+//				countx++;
+//			}
+//			else
+//				if (nums[i] == majorityx)
+//				{
+//					countx++;
+//				}
+//				else//都不为0时
+//					if (county == 0)
+//					{
+//						majorityy = nums[i];
+//						county++;
+//					}
+//					else if (nums[i] == majorityy)
+//					{
+//						county++;
+//					}
+//					else
+//					{
+//						countx--; county--;
+//					}
+//		}
+//		countx = 0; county = 0;
+//		for (int i = 0; i < nums.size();i++)
+//		{
+//			if (majorityx==nums[i])
+//			{
+//				countx++;
+//			}
+//			else if (majorityy == nums[i])
+//			{
+//				county++;
+//			}
+//
+//		}
+//		if (countx>nums.size()/3)
+//		{
+//			rst.push_back(majorityx);
+//		}
+//		if (county > nums.size() / 3)
+//		{
+//			rst.push_back(majorityy);
+//		}
+//		return rst;
+//	}
+//};
+
+//int calculate(string s) {
+//	int res = 0, d = 0;
+//	char sign = '+';
+//	stack<int> nums;
+//	for (int i = 0; i < s.size(); ++i) {
+//		if (s[i] >= '0') {//取到的是数字
+//			d = d * 10 - '0' + s[i];//进位(先减法),取到一位数字对数字还原
+//		}
+//		if ((s[i] < '0' && s[i] != ' ') || i == s.size() - 1) {  //如果当前是符号位或是最后一位了，就会判断上一次的符号位sign
+//			if (sign == '+') {
+//				nums.push(d);
+//			}
+//			else if (sign == '-') {
+//				nums.push(-d);
+//			}
+//			else if (sign == '*' || sign == '/') {
+//				int tmp = sign == '*' ? nums.top() * d : nums.top() / d;
+//				nums.pop();  //取出了最后一个数，利用stack后进先出的性质
+//				nums.push(tmp);
+//			}
+//			sign = s[i]; //保存当前符号
+//			d = 0;
+//		}
+//	}
+//	for (; !nums.empty(); nums.pop()) {
+//		res += nums.top();
+//	}
+//	return res;
+//}
+
+
+//堆栈的题目，因为遍历的顺序，如果都是加法的话都push到stack中就没有先后顺序，关键是有了*/
+//它们的优先级别要高一些，所以当遍历到*/时要将之前push到stack中的数字取出来，是后放进去的先取
+//所以要用一个stack来去保存遍历到的数字。 遍历到该乘法除法运算的时候，就把stack中的数字pop出来
+//运算了以后将乘法除法的结果push到stack中，最后stack元素相加即可。
+//有一些小的细节比如计算currentnum时要先-’0‘再+s[i],反过来有些数字会越界！
 class Solution {
 public:
-	vector<int> majorityElement(vector<int>& nums) {
-		int countx = 0, county = 0;
-		int majorityx = 0, majorityy = 0; vector<int>rst;
-		if (nums.size() == 0) return rst;
-		if (nums.size()==1)  
+	int calculate(string s) {
+		int len = s.size();
+		stack<int> nums;
+		int currentnum = 0;
+		int  rst = 0;
+		char presign = '+'; //定义要计算时上一次的符号
+		for (int i = 0; i < len;i++)
 		{
-			rst.push_back(nums[0]);
-			return rst;
-		}
-		else if (nums.size()==2)
-		{
-			if (nums[1] != nums[0])
-			{
-				rst.push_back(nums[0]);
-				rst.push_back(nums[1]);
-			}
-			else
-				rst.push_back(nums[0]);
-			return rst;
-		}
-		for (int i = 0; i < nums.size();i++)
-		{
+			if (s[i] >= '0'&&s[i] <= '9') //取到的元素是数字
+				currentnum = currentnum * 10 - '0' + s[i];//先加法的话会出界！采坑。
 			
-			if (countx==0&&nums[i]!=majorityy)
+			if (s[i] < '0'&&s[i] != ' '||i==len-1)  //取到加减乘除表示当前的数字取完了，可以push到stack
 			{
-				majorityx = nums[i];
-				countx++;
-			}
-			else
-				if (nums[i] == majorityx)
+				if (presign == '+')
 				{
-					countx++;
+					presign = s[i];
+					nums.push(currentnum);
+					currentnum = 0;
 				}
-				else//都不为0时
-					if (county == 0)
-					{
-						majorityy = nums[i];
-						county++;
-					}
-					else if (nums[i] == majorityy)
-					{
-						county++;
-					}
-					else
-					{
-						countx--; county--;
-					}
+				else if (presign == '-')
+				{
+					presign = s[i];
+					nums.push(-currentnum);
+					currentnum = 0;
+				}
+				else if (presign == '*')
+				{
+					presign = s[i];
+					currentnum = nums.top()*currentnum;
+					nums.pop();
+					nums.push(currentnum);
+					currentnum = 0;
+				}
+				else if (presign == '/')
+				{
+					presign = s[i];
+					currentnum = nums.top()/currentnum;
+					nums.pop();
+					nums.push(currentnum);
+					currentnum = 0;
+				}
+					
+			}
 		}
-		countx = 0; county = 0;
-		for (int i = 0; i < nums.size();i++)
-		{
-			if (majorityx==nums[i])
-			{
-				countx++;
-			}
-			else if (majorityy == nums[i])
-			{
-				county++;
-			}
 
-		}
-		if (countx>nums.size()/3)
+		while (!nums.empty())
 		{
-			rst.push_back(majorityx);
-		}
-		if (county > nums.size() / 3)
-		{
-			rst.push_back(majorityy);
+			rst += nums.top();
+			nums.pop();
 		}
 		return rst;
 	}
 };
 
-int main() {
 
+
+int main() {
+	string s = "3+5/2";
+	Solution t;
+	cout << t.calculate("999 * 111 + 999 * 111");
+	return 1;
 }
 
 

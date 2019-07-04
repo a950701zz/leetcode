@@ -1880,59 +1880,112 @@ typedef unsigned __int32 uint32_t;
 //	}
 //};
 
-//每次快排结束后基准数的位置就代表着他是数组中第k大的数
-//这是快排序从大到小来排，利用快排序排完了以后返回的元素排的元素左边是大于他的 右边是小于他的
-//那这个数的下标是index的话 他不就是第index加1大的数？ 每次排完确定了一个第INDEX大的数
-//然后和k比较，可以确定新的数实在左边序列还是右边序列，再继续快排就好了
+//每次快排结束后基准数的位置就代表着他是数组中第k大的数。
+//这是快排序从大到小来排，利用快排序排完了以后返回的元素排的元素左边是大于他的 右边是小于他的。
+//那这个数的下标是index的话 他不就是第index加1大的数？ 每次排完确定了一个第INDEX大的数。
+//然后和k比较，可以确定新的数实在左边序列还是右边序列，再继续快排就好了。
+//class Solution {
+//public:
+//	int findKthLargest(vector<int>& nums, int k) {
+//		int low = 0, high = nums.size() - 1, mid = 0;
+//		while (low <= high)
+//		{
+//			mid = partation(nums, low, high);  //第mid+1大的数为nums[mid]
+//			if (mid + 1 == k) return nums[mid];
+//			else if (mid + 1 < k)  //在右边
+//			{
+//				low = mid + 1; 
+//			}
+//			else
+//			{
+//				high = mid - 1;
+//			}
+//
+//		}
+//		return 1;
+//	}
+//
+//	int partation(vector<int> &nums, int low, int high) //low和high代表搜寻的范围
+//	{
+//		int left = low + 1, right = high;
+//		int bound = nums[low];//参考比对数: bound
+//		while (left <= right)
+//		{
+//			while (left < high && nums[left] > bound) left++;  //左指针向右，找到第一个比bound小的数后停下
+//			while (nums[right] < bound &&right>low) right--;
+//			if (left < right) swap(nums[left++], nums[right--]);
+//			else break;
+//		}
+//		if (right < left)
+//		{
+//			swap(nums[low], nums[right]); return right;
+//		}
+//		else
+//		{
+//			swap(nums[low], nums[left]);
+//			return left;  //返回的数也就是当前比对参数的坐标，把这个数第left+1大的数
+//		}
+//	}
+//};
+
+
+// Employee info
+class Employee {
+public:
+// It's the unique ID of each node.
+// unique id of this employee
+int id;
+// the importance value of this employee
+int importance;
+// the id of direct subordinates
+vector<int> subordinates;
+Employee(int id, int importance, vector<int> subordinates)
+{
+	this->id = id;
+	this->importance = importance;
+	this->subordinates = subordinates;
+}
+};
+
 class Solution {
 public:
-	int findKthLargest(vector<int>& nums, int k) {
-		int low = 0, high = nums.size() - 1, mid = 0;
-		while (low <= high)
+	int getImportance(vector<Employee*> employees, int id) {
+		map<int, Employee*> employeemap ;//建立一个员工id和相应的它的数据结构的map映射关系
+		map <int, bool> visited;  //建立一个visited
+		queue<int> BFSqueue;
+		for (int i = 0; i < employees.size(); i++)
 		{
-			mid = partation(nums, low, high);  //第mid+1大的数为nums[mid]
-			if (mid + 1 == k) return nums[mid];
-			else if (mid + 1 < k)  //在右边
-			{
-				low = mid + 1; 
-			}
-			else
-			{
-				high = mid - 1;
-			}
+			employeemap[employees[i]->id] = employees[i];
+			visited[employees[i]->id] = false;
+		}
 
-		}
-		return 1;
-	}
-
-	int partation(vector<int> &nums, int low, int high) //low和high代表搜寻的范围
-	{
-		int left = low + 1, right = high;
-		int bound = nums[low];//参考比对数: bound
-		while (left <= right)
+		//BFS搜索,从参数所给的id开始
+		BFSqueue.push(id); int importance=0;
+		while (!BFSqueue.empty())
 		{
-			while (left < high && nums[left] > bound) left++;  //左指针向右，找到第一个比bound小的数后停下
-			while (nums[right] < bound &&right>low) right--;
-			if (left < right) swap(nums[left++], nums[right--]);
-			else break;
+			int curid = BFSqueue.front();
+			visited[curid] = true; 
+			BFSqueue.pop(); importance += employeemap[curid]->importance;
+			for (int i = 0; i < (employeemap[curid]->subordinates).size(); i++)
+			{
+				//访问的是当前员工的下属的第i个下属编号
+				if (visited[(employeemap[curid]->subordinates)[i]] == false)
+				{
+					BFSqueue.push((employeemap[curid]->subordinates)[i]);
+				}
+			}
 		}
-		if (right < left)
-		{
-			swap(nums[low], nums[right]); return right;
-		}
-		else
-		{
-			swap(nums[low], nums[left]);
-			return left;  //返回的数也就是当前比对参数的坐标，把这个数第left+1大的数
-		}
+		return importance;
 	}
 };
 
 int main() {
-	vector<int> test = { 3, 2, 1, 5, 6, 4 };
+	Employee a(1, 2, vector<int>{2});
+	Employee b(2, 3, vector<int>{});
+	Employee c(3, 3, vector<int>{});
+	vector<Employee*> employee = { &a, &b};
 	Solution t;
-	cout << t.findKthLargest(test,2);
-	return 1;
+	cout<<t.getImportance(employee, 2);
 }
 
 

@@ -1978,81 +1978,124 @@ typedef unsigned __int32 uint32_t;
 //		return importance;
 //	}
 //};
-class orange
-{
-public: 
-	int x;
-	int y;
-	int minute;
-	orange(int a, int b,int min):x(a), y(b),minute(min){}
+//class orange
+//{
+//public: 
+//	int x;
+//	int y;
+//	int minute;
+//	orange(int a, int b,int min):x(a), y(b),minute(min){}
+//};
+//class Solution {
+//public:
+//	int orangesRotting(vector<vector<int>>& grid) {
+//		int row = grid.size(); int rst = 0;
+//		int col = grid[0].size(); int counttotal = 0;
+//		queue<orange> BFSqueue; int countrot = 0;
+//		for (int i = 0; i < row; i++)
+//		{
+//			for (int j = 0; j < col; j++)
+//			{
+//				if (grid[i][j] == 2) //如果是腐烂的橘子就加入到队列
+//				{
+//					BFSqueue.push(orange(i, j,0));  //将橘子信息加入到队列中，方便查找
+//					countrot++;
+//				}
+//				if (grid[i][j] == 1)
+//				{
+//					counttotal++;
+//				}
+//			}
+//		}
+//		counttotal += countrot;
+//		
+//		while (!BFSqueue.empty())
+//		{
+//			orange curcorange = BFSqueue.front();
+//			int x = curcorange.x; int y = curcorange.y; int level = curcorange.minute;
+//			BFSqueue.pop();
+//			if (x+1 >= 0 && x + 1 <= row - 1 && y >= 0 && y <= col - 1 && grid[x + 1][y] == 1)
+//			{
+//				countrot++;
+//				BFSqueue.push(orange(x + 1, y, level + 1));
+//				rst = max(level + 1, rst);
+//				grid[x + 1][y] = 2;
+//			}
+//			if (x - 1 >= 0 && x - 1 <= row - 1 && y >= 0 && y <= col - 1 && grid[x - 1][y] == 1)
+//			{
+//				countrot++;
+//				BFSqueue.push(orange(x - 1, y, level + 1));
+//				rst = max(level + 1, rst);
+//				grid[x - 1][y] = 2;
+//			}
+//			if (x >= 0 && x <= row - 1 && y + 1 >= 0 && y + 1 <= col - 1 && grid[x ][y + 1] == 1)
+//			{
+//				countrot++;
+//				BFSqueue.push(orange(x , y + 1, level + 1));
+//				rst = max(level + 1, rst);
+//				grid[x][y + 1] = 2;
+//			}
+//			if (x >= 0 && x <= row - 1 && y - 1 >= 0 && y - 1 <= col - 1 && grid[x ][y - 1] == 1)
+//			{
+//				countrot++;
+//				BFSqueue.push(orange(x , y - 1, level + 1));
+//				rst = max(level + 1, rst);
+//				grid[x][y - 1] = 2;
+//			}
+//
+//		}
+//		if (countrot < counttotal) return -1;
+//		else
+//			return rst;
+//	} 
+//};
+
+struct TreeNode {
+	int val;
+	TreeNode *left;
+	TreeNode *right;
+	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+	
 };
+
 class Solution {
 public:
-	int orangesRotting(vector<vector<int>>& grid) {
-		int row = grid.size(); int rst = 0;
-		int col = grid[0].size(); int counttotal = 0;
-		queue<orange> BFSqueue; int countrot = 0;
-		for (int i = 0; i < row; i++)
-		{
-			for (int j = 0; j < col; j++)
-			{
-				if (grid[i][j] == 2) //如果是腐烂的橘子就加入到队列
-				{
-					BFSqueue.push(orange(i, j,0));  //将橘子信息加入到队列中，方便查找
-					countrot++;
-				}
-				if (grid[i][j] == 1)
-				{
-					counttotal++;
-				}
-			}
-		}
-		counttotal += countrot;
-		
-		while (!BFSqueue.empty())
-		{
-			orange curcorange = BFSqueue.front();
-			int x = curcorange.x; int y = curcorange.y; int level = curcorange.minute;
-			BFSqueue.pop();
-			if (x+1 >= 0 && x + 1 <= row - 1 && y >= 0 && y <= col - 1 && grid[x + 1][y] == 1)
-			{
-				countrot++;
-				BFSqueue.push(orange(x + 1, y, level + 1));
-				rst = max(level + 1, rst);
-				grid[x + 1][y] = 2;
-			}
-			if (x - 1 >= 0 && x - 1 <= row - 1 && y >= 0 && y <= col - 1 && grid[x - 1][y] == 1)
-			{
-				countrot++;
-				BFSqueue.push(orange(x - 1, y, level + 1));
-				rst = max(level + 1, rst);
-				grid[x - 1][y] = 2;
-			}
-			if (x >= 0 && x <= row - 1 && y + 1 >= 0 && y + 1 <= col - 1 && grid[x ][y + 1] == 1)
-			{
-				countrot++;
-				BFSqueue.push(orange(x , y + 1, level + 1));
-				rst = max(level + 1, rst);
-				grid[x][y + 1] = 2;
-			}
-			if (x >= 0 && x <= row - 1 && y - 1 >= 0 && y - 1 <= col - 1 && grid[x ][y - 1] == 1)
-			{
-				countrot++;
-				BFSqueue.push(orange(x , y - 1, level + 1));
-				rst = max(level + 1, rst);
-				grid[x][y - 1] = 2;
-			}
+	int pax = 0; int pay = 0; int levelx = 0; int levely = 0;
+	bool findx = false;	bool findy = false;
+	bool isCousins(TreeNode* root, int x, int y) {
+		findxy(root, root, x, y, 0);
+		return (levelx == levely&&pax != pay) ? true : false;
 
+	}
+	void findxy(TreeNode* curnode, TreeNode* previousNode, int x, int y, int level)
+	{
+		if (curnode == NULL) return;
+		if (curnode->val ==x)
+		{
+			cout << "找到了x level=" << level << endl;
+			levelx = level; pax = previousNode->val; findx = true;
 		}
-		if (countrot < counttotal) return -1;
-		else
-			return rst;
-	} 
+		if (curnode->val == y)
+		{
+			cout << "找到了y level=" << level << endl;
+			levelx = level; pay = previousNode->val; findy = true;
+		}
+		if (curnode->left != NULL && !(findx == true && findy == true))
+		{
+			cout << "寻找" + curnode->val + "的左节点  level=" << level << endl;
+			findxy(curnode->left, curnode, x, y,level+1);
+			
+		}
+		if (curnode->right != NULL && !(findx == true && findy == true))
+		{
+			cout << "寻找" + curnode->val + "的右节点  level=" << level << endl;
+			findxy(curnode->right, curnode, x, y, level + 1);
+		}
+	}
 };
 int main() {
 	vector<vector<int>> or = { { 0, 2 } };
 	Solution t;
-	cout<<t.orangesRotting(or);
 }
 
 

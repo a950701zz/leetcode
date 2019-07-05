@@ -1930,62 +1930,129 @@ typedef unsigned __int32 uint32_t;
 
 
 // Employee info
-class Employee {
-public:
-// It's the unique ID of each node.
-// unique id of this employee
-int id;
-// the importance value of this employee
-int importance;
-// the id of direct subordinates
-vector<int> subordinates;
-Employee(int id, int importance, vector<int> subordinates)
+//class Employee {
+//public:
+//// It's the unique ID of each node.
+//// unique id of this employee
+//int id;
+//// the importance value of this employee
+//int importance;
+//// the id of direct subordinates
+//vector<int> subordinates;
+//Employee(int id, int importance, vector<int> subordinates)
+//{
+//	this->id = id;
+//	this->importance = importance;
+//	this->subordinates = subordinates;
+//}
+//};
+//
+//class Solution {
+//public:
+//	int getImportance(vector<Employee*> employees, int id) {
+//		map<int, Employee*> employeemap ;//建立一个员工id和相应的它的数据结构的map映射关系
+//		map <int, bool> visited;  //建立一个visited
+//		queue<int> BFSqueue;
+//		for (int i = 0; i < employees.size(); i++)
+//		{
+//			employeemap[employees[i]->id] = employees[i];
+//			visited[employees[i]->id] = false;
+//		}
+//
+//		//BFS搜索,从参数所给的id开始
+//		BFSqueue.push(id); int importance=0;
+//		while (!BFSqueue.empty())
+//		{
+//			int curid = BFSqueue.front();
+//			visited[curid] = true; 
+//			BFSqueue.pop(); importance += employeemap[curid]->importance;
+//			for (int i = 0; i < (employeemap[curid]->subordinates).size(); i++)
+//			{
+//				//访问的是当前员工的下属的第i个下属编号
+//				if (visited[(employeemap[curid]->subordinates)[i]] == false)
+//				{
+//					BFSqueue.push((employeemap[curid]->subordinates)[i]);
+//				}
+//			}
+//		}
+//		return importance;
+//	}
+//};
+class orange
 {
-	this->id = id;
-	this->importance = importance;
-	this->subordinates = subordinates;
-}
+public: 
+	int x;
+	int y;
+	int minute;
+	orange(int a, int b,int min):x(a), y(b),minute(min){}
 };
-
 class Solution {
 public:
-	int getImportance(vector<Employee*> employees, int id) {
-		map<int, Employee*> employeemap ;//建立一个员工id和相应的它的数据结构的map映射关系
-		map <int, bool> visited;  //建立一个visited
-		queue<int> BFSqueue;
-		for (int i = 0; i < employees.size(); i++)
+	int orangesRotting(vector<vector<int>>& grid) {
+		int row = grid.size(); int rst = 0;
+		int col = grid[0].size(); int counttotal = 0;
+		queue<orange> BFSqueue; int countrot = 0;
+		for (int i = 0; i < row; i++)
 		{
-			employeemap[employees[i]->id] = employees[i];
-			visited[employees[i]->id] = false;
-		}
-
-		//BFS搜索,从参数所给的id开始
-		BFSqueue.push(id); int importance=0;
-		while (!BFSqueue.empty())
-		{
-			int curid = BFSqueue.front();
-			visited[curid] = true; 
-			BFSqueue.pop(); importance += employeemap[curid]->importance;
-			for (int i = 0; i < (employeemap[curid]->subordinates).size(); i++)
+			for (int j = 0; j < col; j++)
 			{
-				//访问的是当前员工的下属的第i个下属编号
-				if (visited[(employeemap[curid]->subordinates)[i]] == false)
+				if (grid[i][j] == 2) //如果是腐烂的橘子就加入到队列
 				{
-					BFSqueue.push((employeemap[curid]->subordinates)[i]);
+					BFSqueue.push(orange(i, j,0));  //将橘子信息加入到队列中，方便查找
+					countrot++;
+				}
+				if (grid[i][j] == 1)
+				{
+					counttotal++;
 				}
 			}
 		}
-		return importance;
-	}
-};
+		counttotal += countrot;
+		
+		while (!BFSqueue.empty())
+		{
+			orange curcorange = BFSqueue.front();
+			int x = curcorange.x; int y = curcorange.y; int level = curcorange.minute;
+			BFSqueue.pop();
+			if (x+1 >= 0 && x + 1 <= row - 1 && y >= 0 && y <= col - 1 && grid[x + 1][y] == 1)
+			{
+				countrot++;
+				BFSqueue.push(orange(x + 1, y, level + 1));
+				rst = max(level + 1, rst);
+				grid[x + 1][y] = 2;
+			}
+			if (x - 1 >= 0 && x - 1 <= row - 1 && y >= 0 && y <= col - 1 && grid[x - 1][y] == 1)
+			{
+				countrot++;
+				BFSqueue.push(orange(x - 1, y, level + 1));
+				rst = max(level + 1, rst);
+				grid[x - 1][y] = 2;
+			}
+			if (x >= 0 && x <= row - 1 && y + 1 >= 0 && y + 1 <= col - 1 && grid[x ][y + 1] == 1)
+			{
+				countrot++;
+				BFSqueue.push(orange(x , y + 1, level + 1));
+				rst = max(level + 1, rst);
+				grid[x][y + 1] = 2;
+			}
+			if (x >= 0 && x <= row - 1 && y - 1 >= 0 && y - 1 <= col - 1 && grid[x ][y - 1] == 1)
+			{
+				countrot++;
+				BFSqueue.push(orange(x , y - 1, level + 1));
+				rst = max(level + 1, rst);
+				grid[x][y - 1] = 2;
+			}
 
+		}
+		if (countrot < counttotal) return -1;
+		else
+			return rst;
+	} 
+};
 int main() {
-	Employee a(1, 2, vector<int>{2});
-	Employee b(2, 3, vector<int>{});
-	Employee c(3, 3, vector<int>{});
-	vector<Employee*> employee = { &a, &b};
+	vector<vector<int>> or = { { 0, 2 } };
 	Solution t;
-	cout<<t.getImportance(employee, 2);
+	cout<<t.orangesRotting(or);
 }
 
 

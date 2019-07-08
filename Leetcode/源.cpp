@@ -2093,40 +2093,77 @@ struct TreeNode {
 //		}
 //	}
 //};
+//
+//class Solution {
+//	vector<vector<int>> rst;
+//public:
+//	vector<vector<int>> pathSum(TreeNode* root, int sum) {
+//		vector<int>curpath; 
+//		aimedpath(root, sum, curpath, 0);
+//		return rst;
+//	}
+//
+//	void aimedpath(TreeNode*root,int sum,vector<int> curpath,int cursum)
+//	{
+//
+//		if (root == NULL) return;
+//		cursum += root->val;
+//		if (cursum == sum&&root->left==NULL&&root->right==NULL) {
+//			curpath.push_back(root->val);  //当前节点下去就不用考虑了
+//			rst.push_back(curpath);
+//			return;
+//		}
+//			curpath.push_back(root->val);
+//			aimedpath(root->left, sum, curpath, cursum);
+//			aimedpath(root->right, sum, curpath, cursum);
+//	}
+//};
 
-class Solution {
-	vector<vector<int>> rst; bool issingle = false;
-public:
-	vector<vector<int>> pathSum(TreeNode* root, int sum) {
-		vector<int>curpath; 
-		if (root != NULL)
-		{
-			if (root->left == NULL&&root->right == NULL)
-			{
-				issingle = true;
-			}
+struct TreeNode {
+	     int val;
+	     TreeNode *left;
+	     TreeNode *right;
+	     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+	 };
+	 //对搜素二叉树中序遍历，实际上就是遍历得到了依次从小到大排列的节点值
+	class Solution {
+	public:
+		vector<int>result;
+		int  kthSmallest(TreeNode* root,int k) {
+			if (root == NULL) return 0;
+			if (root->left != NULL)  //左边有访问左边
+				kthSmallest(root->left,1);
+			//左边没有，到它自己了，所以返回它的值后访问右边
+			result.push_back(root->val);
+			if (root->right != NULL) kthSmallest(root->right,1);
+			return result[k-1];
 		}
-		aimedpath(root, sum, curpath, 0);
-		return rst;
+	};
+class Solution {
+public:
+	vector<int> result;
+	bool isValidBST(TreeNode* root) {
+		middleBFS(root);
+		int len = result.size();
+		for (int i = 0; i < len-1; i++)
+		{
+			if (result[i] < result[i + 1]) continue;
+			else
+				return false;
+		}
+		return true;
 	}
 
-	void aimedpath(TreeNode*root,int sum,vector<int> curpath,int cursum)
+	bool middleBFS(TreeNode* root)
 	{
-
 		if (root == NULL) return;
-		cursum += root->val;
-		if (cursum == sum) {
-			curpath.push_back(root->val);  //当前节点下去就不用考虑了
-			if (curpath.size()==1&&issingle==false) //如果只有一个节点才允许返回根节点路径，否则不行
-				return;
-			rst.push_back(curpath);
-			return;
-		}
-			curpath.push_back(root->val);
-			aimedpath(root->left, sum, curpath, cursum);
-			aimedpath(root->right, sum, curpath, cursum);
+		if (root->left != NULL) middleBFS(root->left);
+		result.push_back(root->val);
+		if (root->right != NULL) middleBFS(root->right);
 	}
 };
+
+
 int main() {
 	vector<vector<int>> or = { { 0, 2 } };
 	Solution t;

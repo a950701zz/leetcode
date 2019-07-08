@@ -2057,40 +2057,74 @@ struct TreeNode {
 	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 	
 };
+//
+//class Solution {
+//public:
+//	int pax = 0; int pay = 0; int levelx = 0; int levely = 0;
+//	bool findx = false;	bool findy = false;
+//	bool isCousins(TreeNode* root, int x, int y) {
+//		findxy(root, root, x, y, 0);
+//		return (levelx == levely&&pax != pay) ? true : false;
+//
+//	}
+//	void findxy(TreeNode* curnode, TreeNode* previousNode, int x, int y, int level)
+//	{
+//		if (curnode == NULL) return;
+//		if (curnode->val ==x)
+//		{
+//			cout << "找到了x level=" << level << endl;
+//			levelx = level; pax = previousNode->val; findx = true;
+//		}
+//		if (curnode->val == y)
+//		{
+//			cout << "找到了y level=" << level << endl;
+//			levelx = level; pay = previousNode->val; findy = true;
+//		}
+//		if (curnode->left != NULL && !(findx == true && findy == true))
+//		{
+//			cout << "寻找" << curnode->val + "的左节点  level=" << level << endl;
+//			findxy(curnode->left, curnode, x, y,level+1);
+//			
+//		}
+//		if (curnode->right != NULL && !(findx == true && findy == true))
+//		{
+//			cout << "寻找" << curnode->val + "的右节点  level=" << level << endl;
+//			findxy(curnode->right, curnode, x, y, level + 1);
+//		}
+//	}
+//};
 
 class Solution {
+	vector<vector<int>> rst; bool issingle = false;
 public:
-	int pax = 0; int pay = 0; int levelx = 0; int levely = 0;
-	bool findx = false;	bool findy = false;
-	bool isCousins(TreeNode* root, int x, int y) {
-		findxy(root, root, x, y, 0);
-		return (levelx == levely&&pax != pay) ? true : false;
-
+	vector<vector<int>> pathSum(TreeNode* root, int sum) {
+		vector<int>curpath; 
+		if (root != NULL)
+		{
+			if (root->left == NULL&&root->right == NULL)
+			{
+				issingle = true;
+			}
+		}
+		aimedpath(root, sum, curpath, 0);
+		return rst;
 	}
-	void findxy(TreeNode* curnode, TreeNode* previousNode, int x, int y, int level)
+
+	void aimedpath(TreeNode*root,int sum,vector<int> curpath,int cursum)
 	{
-		if (curnode == NULL) return;
-		if (curnode->val ==x)
-		{
-			cout << "找到了x level=" << level << endl;
-			levelx = level; pax = previousNode->val; findx = true;
+
+		if (root == NULL) return;
+		cursum += root->val;
+		if (cursum == sum) {
+			curpath.push_back(root->val);  //当前节点下去就不用考虑了
+			if (curpath.size()==1&&issingle==false) //如果只有一个节点才允许返回根节点路径，否则不行
+				return;
+			rst.push_back(curpath);
+			return;
 		}
-		if (curnode->val == y)
-		{
-			cout << "找到了y level=" << level << endl;
-			levelx = level; pay = previousNode->val; findy = true;
-		}
-		if (curnode->left != NULL && !(findx == true && findy == true))
-		{
-			cout << "寻找" + curnode->val + "的左节点  level=" << level << endl;
-			findxy(curnode->left, curnode, x, y,level+1);
-			
-		}
-		if (curnode->right != NULL && !(findx == true && findy == true))
-		{
-			cout << "寻找" + curnode->val + "的右节点  level=" << level << endl;
-			findxy(curnode->right, curnode, x, y, level + 1);
-		}
+			curpath.push_back(root->val);
+			aimedpath(root->left, sum, curpath, cursum);
+			aimedpath(root->right, sum, curpath, cursum);
 	}
 };
 int main() {

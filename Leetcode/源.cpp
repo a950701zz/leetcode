@@ -2125,41 +2125,27 @@ struct TreeNode {
 	     TreeNode *right;
 	     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 	 };
-	 //对搜素二叉树中序遍历，实际上就是遍历得到了依次从小到大排列的节点值
-	class Solution {
-	public:
-		vector<int>result;
-		int  kthSmallest(TreeNode* root,int k) {
-			if (root == NULL) return 0;
-			if (root->left != NULL)  //左边有访问左边
-				kthSmallest(root->left,1);
-			//左边没有，到它自己了，所以返回它的值后访问右边
-			result.push_back(root->val);
-			if (root->right != NULL) kthSmallest(root->right,1);
-			return result[k-1];
-		}
-	};
+
+//二叉搜索树的中序遍历
 class Solution {
 public:
-	vector<int> result;
+	int current; int previous; int rst = true;
 	bool isValidBST(TreeNode* root) {
+		current = root->val;
 		middleBFS(root);
-		int len = result.size();
-		for (int i = 0; i < len-1; i++)
-		{
-			if (result[i] < result[i + 1]) continue;
-			else
-				return false;
-		}
-		return true;
+		return rst;
 	}
 
 	bool middleBFS(TreeNode* root)
 	{
+		if (rst == false) return false;
 		if (root == NULL) return;
 		if (root->left != NULL) middleBFS(root->left);
-		result.push_back(root->val);
+		previous = current;
+		current = root->val;
+		if (current < previous) rst = false;
 		if (root->right != NULL) middleBFS(root->right);
+		return true;
 	}
 };
 

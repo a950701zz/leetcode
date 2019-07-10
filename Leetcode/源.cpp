@@ -2149,50 +2149,78 @@ struct TreeNode {
 //	}
 //};
 //
+
+//想学习贪心算法，从简单的开始，但这题太过于简单，就算不会贪心算法也知道题解啊
+//class Solution {
+//public:
+//	bool lemonadeChange(vector<int>& bills) {
+//		if (bills[0] != 5 || bills[1] == 20)//自己初始为0，所以第一回合后自己手中的钱应该为5，第二回合应为10
+//			return false;
+//		int n = 0;//5元的数目
+//		int m = 0;//10元的数目
+//		for (int i = 0; i < bills.size(); i++)
+//		{
+//			if (bills[i] == 5)
+//			{
+//				n++;
+//			}
+//			else if (bills[i] == 10)
+//			{
+//				if (n)
+//				{
+//					n--;
+//					m++;
+//				}
+//				else return false;
+//			}
+//			else
+//			{
+//				if (m)
+//				{
+//					if (n)
+//					{
+//						m--;
+//						n--;
+//						continue;
+//					}
+//				}
+//				if (n >= 3)
+//				{
+//					n -= 3;
+//				}
+//				else return false;
+//			}
+//		}
+//		return true;
+//	}
+//};
+
+
 class Solution {
 public:
-	double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
-		int n = nums1.size();
-		int m = nums2.size();
-
-		if (n > m)  //保证数组1一定最短
+	bool canJump(vector<int>& nums) {
+		if (nums.size() == 1) return true;;
+		int len = nums.size();
+		int curbest = len - 1;
+		for (int i = len-2; i>=1; i--)
 		{
-			return findMedianSortedArrays(nums2, nums1);
+			if (nums[i] + i >= curbest)
+			{//当前位置就是最近的最好位置，更新
+				curbest = i;
+			}
 		}
-
-		// Ci 为第i个数组的割,比如C1为2时表示第1个数组只有2个元素。LMaxi为第i个数组割后的左元素。RMini为第i个数组割后的右元素。
-		int LMax1, LMax2, RMin1, RMin2, c1, c2, lo = 0, hi = 2 * n;  //我们目前是虚拟加了'#'所以数组1是2*n长度
-
-		while (lo <= hi)   //二分
-		{
-			c1 = (lo + hi) / 2;  //c1是二分的结果
-			c2 = m + n - c1;
-
-			LMax1 = (c1 == 0) ? INT_MIN : nums1[(c1 - 1) / 2];
-			RMin1 = (c1 == 2 * n) ? INT_MAX : nums1[c1 / 2];
-			LMax2 = (c2 == 0) ? INT_MIN : nums2[(c2 - 1) / 2];
-			RMin2 = (c2 == 2 * m) ? INT_MAX : nums2[c2 / 2];
-
-			if (LMax1 > RMin2)
-				hi = c1 - 1;
-			else if (LMax2 > RMin1)
-				lo = c1 + 1;
-			else
-				break;
-		}
-		return (max(LMax1, LMax2) + min(RMin1, RMin2)) / 2.0;
+		return nums[0] >= curbest ? true:false;
 	}
 };
 
 
+
+
 int main(int argc, char *argv[])
 {
-	vector<int> nums1 = { 2, 3, 5 };
-	vector<int> nums2 = { 1, 4, 7, 9 };
-
-	Solution solution;
-	double ret = solution.findMedianSortedArrays(nums1, nums2);
-	return 0;
+	vector<int> test = { 3,2,1,0,4 };
+	Solution t;
+	cout << t.canJump(test);
 }
 
 

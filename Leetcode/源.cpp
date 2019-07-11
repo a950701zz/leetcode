@@ -2216,38 +2216,87 @@ struct TreeNode {
 //
 
 //回溯算法,对其进行优化就是记录每一个点的位置，记录这个点是可以通向终点的还是是思路，下次遍历的时候就不用走到头了
+//class Solution {
+//public:
+//	 //0 未知，1 
+//	int jump(vector<int>& nums) {
+//		int step = 0; int maxpos = 0; int len = nums.size() - 1;
+//		for (int i = 0; i < len;)
+//		{
+//			int best = 0; int ini = 0;
+//			
+//			for (int j = 1; j <= nums[i];j++)  //在第i步时往前走的步数
+//			{
+//				if (i + j == len) return step + 1;
+//
+//				if (j+nums[i+j]>ini)  //走j步好一些
+//				{
+//					best = j;  //更新为向前走j步
+//					ini = j + nums[i + j];
+//				}
+//			}
+//			i = i + best;
+//			step++;
+//		}
+//		return step;
+//	}
+//
+//	
+//};
+
 class Solution {
 public:
-	 //0 未知，1 
-	int jump(vector<int>& nums) {
-		int step = 0; int maxpos = 0; int len = nums.size() - 1;
-		for (int i = 0; i < len;)
+	int videoStitching(vector<vector<int>>& clips, int T) {
+		if (T == 0)
+			return 0;
+		int len = clips.size();
+		int l, r;
+		l = 0;
+		r = T;
+		int re = 0;
+		while (l<r)
 		{
-			int best = 0; int ini = 0;
-			
-			for (int j = 1; j <= nums[i]&&i+j<=len;j++)  //在第i步时往前走的步数
+			int maxl, maxr;
+			int indl, indr;
+			maxl = maxr = -1;
+			indl = l;
+			indr = r;
+			for (int i = 0; i<len; ++i)
 			{
-				if (j+nums[i+j]>ini)  //走j步好一些
+				if (clips[i][0] <= l)
 				{
-					best = j;  //更新为向前走j步
-					ini = j + nums[i + j];
+					if ((clips[i][1] - l)>maxl)
+					{
+						maxl = (clips[i][1] - l);
+						indl = i;
+					}
+				}
+				if (clips[i][1] >= r)
+				{
+					if ((r - clips[i][0])>maxr)
+					{
+						maxr = (r - clips[i][0]);
+						indr = i;
+					}
 				}
 			}
-			i = i + best;
-			step++;
+			if (maxl == -1 || maxr == -1)
+				return -1;
+			++re;
+			if ((r) <= (clips[indl][1]) || l >= clips[indr][0])
+				break;
+			++re;
+			l = clips[indl][1];
+			r = clips[indr][0];
 		}
-		return step;
+		return re;
 	}
-
-	
 };
-
-
 int main(int argc, char *argv[])
 {
 	vector<int> test = {2,3,1,1,4};
 	Solution t;
-	cout << t.jump(test);
+	
 }
 
 

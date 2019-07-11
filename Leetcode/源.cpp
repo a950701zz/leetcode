@@ -2195,32 +2195,59 @@ struct TreeNode {
 //	}
 //};
 
+//也是贪心算法，一下子就写出来了，感觉贪心算法更多的是一种思路。
+//class Solution {
+//public:
+//	bool canJump(vector<int>& nums) {
+//		if (nums.size() == 1) return true;;
+//		int len = nums.size();
+//		int curbest = len - 1;
+//		for (int i = len-2; i>=1; i--)
+//		{
+//			if (nums[i] + i >= curbest)
+//			{//当前位置就是最近的最好位置，更新
+//				curbest = i;
+//			}
+//		}
+//		return nums[0] >= curbest ? true:false;
+//	}
+//};
+//
+//
 
+//回溯算法,对其进行优化就是记录每一个点的位置，记录这个点是可以通向终点的还是是思路，下次遍历的时候就不用走到头了
 class Solution {
 public:
-	bool canJump(vector<int>& nums) {
-		if (nums.size() == 1) return true;;
-		int len = nums.size();
-		int curbest = len - 1;
-		for (int i = len-2; i>=1; i--)
+	 //0 未知，1 
+	int jump(vector<int>& nums) {
+		int step = 0; int maxpos = 0; int len = nums.size() - 1;
+		for (int i = 0; i < len;)
 		{
-			if (nums[i] + i >= curbest)
-			{//当前位置就是最近的最好位置，更新
-				curbest = i;
+			int best = 0; int ini = 0;
+			
+			for (int j = 1; j <= nums[i]&&i+j<=len;j++)  //在第i步时往前走的步数
+			{
+				if (j+nums[i+j]>ini)  //走j步好一些
+				{
+					best = j;  //更新为向前走j步
+					ini = j + nums[i + j];
+				}
 			}
+			i = i + best;
+			step++;
 		}
-		return nums[0] >= curbest ? true:false;
+		return step;
 	}
+
+	
 };
-
-
 
 
 int main(int argc, char *argv[])
 {
-	vector<int> test = { 3,2,1,0,4 };
+	vector<int> test = {2,3,1,1,4};
 	Solution t;
-	cout << t.canJump(test);
+	cout << t.jump(test);
 }
 
 

@@ -2294,12 +2294,87 @@ struct TreeNode {
 //		return re;
 //	}
 //};
+//
+//class Solution {
+//public:
+//	int Max1 = INT_MIN;
+//	int maxPathSum(TreeNode* root) {
+//		if (root == NULL) return INT_MIN;
+//
+//		digui(root);
+//
+//
+//		return Max1;
+//	}
+//
+//	int digui(TreeNode* root){
+//		if (root == NULL) return INT_MIN;
+//
+//		int Max2 = root->val;
+//		int Max3 = root->val;
+//		int path1 = digui(root->left);
+//		int path2 = digui(root->right);
+//
+//		if (path1 > 0)  //path1表示左边路径
+//			Max2 = max(Max2, root->val + path1);
+//		if (path2 > 0)  //右边路径
+//			Max2 = max(Max2, root->val + path2);
+//		if (path1 > 0 && path2 > 0)  //
+//			Max3 = root->val + path1 + path2;
+//		Max1 = max(Max1, Max2);
+//		Max1 = max(Max1, Max3);
+//
+//		cout << "节点" << root->val << "的最大和" << Max1 << endl;
+//		return Max2;
+//	}
+//
+//};
 
 
+class Solution {
+public:
+	bool isPossible(vector<int>& nums) {
+		map <int, int> countnum;	map <int, int> tailmap;
+		for (int i = 0; i <= nums.size()-1;i++)
+		{
+			countnum[nums[i]]++;
+			
+		}
+	//对于每一个序列，只用记住队尾的数列就行，因为是升序的
+		for (int i = 0; i <= nums.size()-1;i++)
+		{
+			
+			if (countnum[nums[i]]==0)  continue;//没有元素
+			else
+			{
+				//存在这个元素
+				if(tailmap[nums[i]-1] == 0) //队尾没有
+				{
+					if (countnum[nums[i] + 1] != 0 && countnum[nums[i] + 2] != 0)
+					{
+						//后面两个元素都有
+						tailmap[nums[i] + 2]++; countnum[nums[i]]--;
+						countnum[nums[i] + 1]--; countnum[nums[i] + 2]--;
+					}
+					else return false;
+				}
+				else
+				{
+					//队尾有这个元素，添加到队尾即可
+					tailmap[nums[i]]++; tailmap[nums[i]-1]--;
+					countnum[nums[i] ]--;
+				}
+
+			}
+		}
+		return true;
+	}
+};
 int main(int argc, char *argv[])
 {
-	vector<int> test = {2,3,1,1,4};
+	vector<int> test = {1,2,3,4,4,5};
 	Solution t;
+	cout << t.isPossible(test);
 	
 }
 

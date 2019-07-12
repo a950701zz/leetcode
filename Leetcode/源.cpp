@@ -2244,54 +2244,58 @@ struct TreeNode {
 //	
 //};
 
-class Solution {
-public:
-	int videoStitching(vector<vector<int>>& clips, int T) {
-		if (T == 0)
-			return 0;
-		int len = clips.size();
-		int l, r;
-		l = 0;
-		r = T;
-		int re = 0;
-		while (l<r)
-		{
-			int maxl, maxr;
-			int indl, indr;
-			maxl = maxr = -1;
-			indl = l;
-			indr = r;
-			for (int i = 0; i<len; ++i)
-			{
-				if (clips[i][0] <= l)
-				{
-					if ((clips[i][1] - l)>maxl)
-					{
-						maxl = (clips[i][1] - l);
-						indl = i;
-					}
-				}
-				if (clips[i][1] >= r)
-				{
-					if ((r - clips[i][0])>maxr)
-					{
-						maxr = (r - clips[i][0]);
-						indr = i;
-					}
-				}
-			}
-			if (maxl == -1 || maxr == -1)
-				return -1;
-			++re;
-			if ((r) <= (clips[indl][1]) || l >= clips[indr][0])
-				break;
-			++re;
-			l = clips[indl][1];
-			r = clips[indr][0];
-		}
-		return re;
-	}
-};
+
+//只看懂了一点点 所以照着别人的写了一遍。。。
+//class Solution {
+//public:
+//	int videoStitching(vector<vector<int>>& clips, int T) {
+//		if (T == 0)
+//			return 0;
+//		int len = clips.size();
+//		int l, r;
+//		l = 0;
+//		r = T;
+//		int re = 0;
+//		while (l<r)
+//		{
+//			int maxl, maxr;
+//			int indl, indr;
+//			maxl = maxr = -1;
+//			indl = l;
+//			indr = r;
+//			for (int i = 0; i<len; ++i)
+//			{
+//				if (clips[i][0] <= l)
+//				{
+//					if ((clips[i][1] - l)>maxl)
+//					{
+//						maxl = (clips[i][1] - l);
+//						indl = i;
+//					}
+//				}
+//				if (clips[i][1] >= r)
+//				{
+//					if ((r - clips[i][0])>maxr)
+//					{
+//						maxr = (r - clips[i][0]);
+//						indr = i;
+//					}
+//				}
+//			}
+//			if (maxl == -1 || maxr == -1)
+//				return -1;
+//			++re;
+//			if ((r) <= (clips[indl][1]) || l >= clips[indr][0])
+//				break;
+//			++re;
+//			l = clips[indl][1];
+//			r = clips[indr][0];
+//		}
+//		return re;
+//	}
+//};
+
+
 int main(int argc, char *argv[])
 {
 	vector<int> test = {2,3,1,1,4};

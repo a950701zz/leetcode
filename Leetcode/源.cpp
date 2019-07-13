@@ -2050,13 +2050,13 @@ typedef unsigned __int32 uint32_t;
 //	} 
 //};
 
-struct TreeNode {
-	int val;
-	TreeNode *left;
-	TreeNode *right;
-	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-	
-};
+//struct TreeNode {
+//	int val;
+//	TreeNode *left;
+//	TreeNode *right;
+//	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+//	
+//};
 //
 //class Solution {
 //public:
@@ -2371,39 +2371,74 @@ struct TreeNode {
 //	}
 //};
 
+//class Solution {
+//public:
+//	int candy(vector<int>& ratings) {
+//		if (ratings.size() <= 1) return ratings.size();
+//		int candies = 0; int up = 0; int old_slope = 0; int down = 0;
+//		for (int i = 1; i <= ratings.size() - 1;i++)
+//		{
+//			//如果ratings[i]>ratings[i-1],newslop为1，等于为0；小于为-1;
+//			int new_slope = (ratings[i] > ratings[i - 1]) ? 1 : (ratings[i] < ratings[i - 1] ? -1 : 0);
+//			if ((old_slope>0&&new_slope==0)||(old_slope<0&& new_slope>=0))
+//			{
+//				candies += countc(up) + countc(down) + max(up, down); up = 0; down = 0;
+//			}
+//			if (new_slope > 0) up++;
+//			if (new_slope < 0) down++;
+//			if (new_slope == 0) candies++;
+//			old_slope = new_slope;
+//		
+//		}
+//		candies = countc(up) + countc(down) + max(up, down) + 1;
+//		return candies;
+//	}
+//
+//	int countc(int n)
+//	{
+//		return n*(n + 1) / 2;
+//	}
+//};
+
+ struct TreeNode {
+	int val;
+	TreeNode *left;
+	TreeNode *right;
+	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+	
+};
 class Solution {
 public:
-	int candy(vector<int>& ratings) {
-		if (ratings.size() <= 1) return ratings.size();
-		int candies = 0; int up = 0; int old_slope = 0; int down = 0;
-		for (int i = 1; i <= ratings.size() - 1;i++)
-		{
-			//如果ratings[i]>ratings[i-1],newslop为1，等于为0；小于为-1;
-			int new_slope = (ratings[i] > ratings[i - 1]) ? 1 : (ratings[i] < ratings[i - 1] ? -1 : 0);
-			if ((old_slope>0&&new_slope==0)||(old_slope<0&& new_slope>=0))
-			{
-				candies += countc(up) + countc(down) + max(up, down); up = 0; down = 0;
-			}
-			if (new_slope > 0) up++;
-			if (new_slope < 0) down++;
-			if (new_slope == 0) candies++;
-			old_slope = new_slope;
-		
-		}
-		candies = countc(up) + countc(down) + max(up, down) + 1;
-		return candies;
+	TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
+		TreeNode *root = new TreeNode(0);
+		return construct( 0, nums.size() - 1, nums);
 	}
 
-	int countc(int n)
+	TreeNode* construct( int le, int ri, vector<int>& nums)
 	{
-		return n*(n + 1) / 2;
+		if (le<0 || ri>nums.size() - 1) return NULL;
+		if (le == ri) { TreeNode *node = new TreeNode(nums[le]); return node; }
+		int maxnum = INT_MIN; int index = le;
+		//第一个参数是插入的当前节点，第二个参数是开始位置，第三个参数是结束位置
+		for (int i = 0; i <= ri;i++)
+		{
+			if (nums[i]>maxnum)
+			{
+				index = i; maxnum = nums[i];
+			}
+		}
+		
+		TreeNode *node = new TreeNode(nums[index]);
+		node->left = construct( le, index - 1, nums);
+		node->right = construct( index + 1, ri, nums);
+		return node;
 	}
 };
 int main(int argc, char *argv[])
 {
 	vector<int> test = {1,2,2};
 	Solution t;
-	cout << t.candy(test);
+	
 	
 }
 

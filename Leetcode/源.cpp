@@ -2330,51 +2330,80 @@ struct TreeNode {
 //
 //};
 
+//
+//class Solution {
+//public:
+//	bool isPossible(vector<int>& nums) {
+//		map <int, int> countnum;	map <int, int> tailmap;
+//		for (int i = 0; i <= nums.size()-1;i++)
+//		{
+//			countnum[nums[i]]++;
+//			
+//		}
+//	//对于每一个序列，只用记住队尾的数列就行，因为是升序的
+//		for (int i = 0; i <= nums.size()-1;i++)
+//		{
+//			
+//			if (countnum[nums[i]]==0)  continue;//没有元素
+//			else
+//			{
+//				//存在这个元素
+//				if(tailmap[nums[i]-1] == 0) //队尾没有
+//				{
+//					if (countnum[nums[i] + 1] != 0 && countnum[nums[i] + 2] != 0)
+//					{
+//						//后面两个元素都有
+//						tailmap[nums[i] + 2]++; countnum[nums[i]]--;
+//						countnum[nums[i] + 1]--; countnum[nums[i] + 2]--;
+//					}
+//					else return false;
+//				}
+//				else
+//				{
+//					//队尾有这个元素，添加到队尾即可
+//					tailmap[nums[i]]++; tailmap[nums[i]-1]--;
+//					countnum[nums[i] ]--;
+//				}
+//
+//			}
+//		}
+//		return true;
+//	}
+//};
 
 class Solution {
 public:
-	bool isPossible(vector<int>& nums) {
-		map <int, int> countnum;	map <int, int> tailmap;
-		for (int i = 0; i <= nums.size()-1;i++)
+	int candy(vector<int>& ratings) {
+		if (ratings.size() <= 1) return ratings.size();
+		int candies = 0; int up = 0; int old_slope = 0; int down = 0;
+		for (int i = 1; i <= ratings.size() - 1;i++)
 		{
-			countnum[nums[i]]++;
-			
-		}
-	//对于每一个序列，只用记住队尾的数列就行，因为是升序的
-		for (int i = 0; i <= nums.size()-1;i++)
-		{
-			
-			if (countnum[nums[i]]==0)  continue;//没有元素
-			else
+			//如果ratings[i]>ratings[i-1],newslop为1，等于为0；小于为-1;
+			int new_slope = (ratings[i] > ratings[i - 1]) ? 1 : (ratings[i] < ratings[i - 1] ? -1 : 0);
+			if ((old_slope>0&&new_slope==0)||(old_slope<0&& new_slope>=0))
 			{
-				//存在这个元素
-				if(tailmap[nums[i]-1] == 0) //队尾没有
-				{
-					if (countnum[nums[i] + 1] != 0 && countnum[nums[i] + 2] != 0)
-					{
-						//后面两个元素都有
-						tailmap[nums[i] + 2]++; countnum[nums[i]]--;
-						countnum[nums[i] + 1]--; countnum[nums[i] + 2]--;
-					}
-					else return false;
-				}
-				else
-				{
-					//队尾有这个元素，添加到队尾即可
-					tailmap[nums[i]]++; tailmap[nums[i]-1]--;
-					countnum[nums[i] ]--;
-				}
-
+				candies += countc(up) + countc(down) + max(up, down); up = 0; down = 0;
 			}
+			if (new_slope > 0) up++;
+			if (new_slope < 0) down++;
+			if (new_slope == 0) candies++;
+			old_slope = new_slope;
+		
 		}
-		return true;
+		candies = countc(up) + countc(down) + max(up, down) + 1;
+		return candies;
+	}
+
+	int countc(int n)
+	{
+		return n*(n + 1) / 2;
 	}
 };
 int main(int argc, char *argv[])
 {
-	vector<int> test = {1,2,3,4,4,5};
+	vector<int> test = {1,2,2};
 	Solution t;
-	cout << t.isPossible(test);
+	cout << t.candy(test);
 	
 }
 

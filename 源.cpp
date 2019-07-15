@@ -2456,39 +2456,63 @@ typedef unsigned __int32 uint32_t;
 //	}
 //};
 
+//class Solution {
+//public:
+//	vector<string> rst;
+//	vector<string> letterCombinations(string digits) {
+//		vector<string> indexstring = { "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
+//		if (digits == "") return rst;
+//	
+//		digui(digits, 0, "",indexstring);
+//		return rst;
+//	
+//	}
+//	void digui(string digits, int index,string custring,vector<string> indexstring )
+//	{
+//		if (index == digits.size())
+//		{
+//			rst.push_back(custring); return;
+//		}
+//		for (int i = 0; i < indexstring[digits[index]-'2'].size();i++)
+//		{
+//			string custring1;
+//			custring1=custring + indexstring[digits[index] - '2'][i];
+//			digui(digits, index + 1, custring1, indexstring);
+//			
+//		}
+//	}
+//};
+
+
 class Solution {
 public:
-	vector<string> rst;
-	vector<string> letterCombinations(string digits) {
-		vector<string> indexstring = { "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
-		if (digits == "") return rst;
-	
-		digui(digits, 0, "",indexstring);
+	vector<int> spiralOrder(vector<vector<int>>& matrix) {
+		vector<int>rst;
+		int right  = matrix[0].size() - 1;
+		int down = matrix.size() - 1;
+		int left = 0;
+		int up = 0;
+		while (1)
+		{
+			//向右，从matrix[left]走到
+			for (int i = left; i <= right; i ++ ) rst.push_back(matrix[up][i]);
+			if (++up > down) return rst;
+			for (int i = up; i <= down; i++) rst.push_back(matrix[i][right]);
+			if (--right<left) return rst;
+			for (int i = right; i >= left; i--) rst.push_back(matrix[down][i]);
+			if (--down<up)return rst;
+			for (int i = down; i >=up; i--) rst.push_back(matrix[i][left]);
+			if (++left > right) return rst;
+		}
 		return rst;
-	
-	}
-	void digui(string digits, int index,string custring,vector<string> indexstring )
-	{
-		if (index == digits.size())
-		{
-			rst.push_back(custring); return;
-		}
-		for (int i = 0; i < indexstring[digits[index]-'2'].size();i++)
-		{
-			string custring1;
-			custring1=custring + indexstring[digits[index] - '2'][i];
-			digui(digits, index + 1, custring1, indexstring);
-			
-		}
 	}
 };
 
-
 int main(int argc, char *argv[])
 {
-	vector<int> test = {1,2,2};
+	vector<vector<int>> test = { { 1, 2, 3,4}, {  5, 6,7,8 }, {  9,10,11,12 } };
 	Solution t;
-	t.letterCombinations("23");
+	t.spiralOrder(test);
 	
 	
 }

@@ -2506,33 +2506,49 @@ typedef unsigned __int32 uint32_t;
 //		}
 //		return rst;
 //	}
+////};
+//class Solution {
+//public:
+//	vector<vector<int>> generateMatrix(int n) {
+//		vector<vector<int>> rst(n, vector<int>(n)); int cur = 1;
+//		if (n == 1){ rst[0][0] = 1; return rst; }
+//		int left = 0; int right = n - 1; int down = n-1; int up = 0;
+//		while (1)
+//		{
+//			for (int i = left; i <= right; i++) rst[up][i] = cur++;
+//			up++; if (cur > n*n) break;
+//			for (int i = up; i <= down; i++) rst[i][right] = cur++;
+//			right--; if (cur > n*n) break;
+//			for (int i = right; i >= left; i--) rst[down][i] = cur++;
+//			down--; if (cur > n*n) break;
+//			for (int i = down; i >= up; i--)
+//				rst[i][left] = cur++;
+//			left++; if (cur > n*n) break;
+//		}
+//		return rst;
+//	}
 //};
+
 class Solution {
 public:
-	vector<vector<int>> generateMatrix(int n) {
-		vector<vector<int>> rst(n, vector<int>(n)); int cur = 1;
-		if (n == 1){ rst[0][0] = 1; return rst; }
-		int left = 0; int right = n - 1; int down = n-1; int up = 0;
-		while (1)
+	int firstUniqChar(string s) {
+		map<char, int> coutt; int curindex = -1;
+		for (int i = 0; i < s.size(); i++)
 		{
-			for (int i = left; i <= right; i++) rst[up][i] = cur++;
-			up++; if (cur > n*n) break;
-			for (int i = up; i <= down; i++) rst[i][right] = cur++;
-			right--; if (cur > n*n) break;
-			for (int i = right; i >= left; i--) rst[down][i] = cur++;
-			down--; if (cur > n*n) break;
-			for (int i = down; i <= up; i--)
-				rst[i][left] = cur++;
-			left++; if (cur > n*n) break;
+			coutt[s[i]]++;
 		}
-		return rst;
+		for (int i = 0; i < s.size(); i++)
+		{
+			if (coutt[s[i]] == 1) return i;
+		}
+		return -1;
 	}
 };
 int main(int argc, char *argv[])
 {
 	vector<vector<int>> test = { { 1, 2, 3,4}, {  5, 6,7,8 }, {  9,10,11,12 } };
 	Solution t;
-	t.generateMatrix(3);
+	cout<<t.firstUniqChar("loveleetcode");
 	
 	
 }

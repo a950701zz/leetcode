@@ -2484,35 +2484,55 @@ typedef unsigned __int32 uint32_t;
 //};
 
 
+//class Solution {
+//public:
+//	vector<int> spiralOrder(vector<vector<int>>& matrix) {
+//		vector<int>rst;
+//		int right  = matrix[0].size() - 1;
+//		int down = matrix.size() - 1;
+//		int left = 0;
+//		int up = 0;
+//		while (1)
+//		{
+//			//向右，从matrix[left]走到
+//			for (int i = left; i <= right; i ++ ) rst.push_back(matrix[up][i]);
+//			if (++up > down) return rst;
+//			for (int i = up; i <= down; i++) rst.push_back(matrix[i][right]);
+//			if (--right<left) return rst;
+//			for (int i = right; i >= left; i--) rst.push_back(matrix[down][i]);
+//			if (--down<up)return rst;
+//			for (int i = down; i >=up; i--) rst.push_back(matrix[i][left]);
+//			if (++left > right) return rst;
+//		}
+//		return rst;
+//	}
+//};
 class Solution {
 public:
-	vector<int> spiralOrder(vector<vector<int>>& matrix) {
-		vector<int>rst;
-		int right  = matrix[0].size() - 1;
-		int down = matrix.size() - 1;
-		int left = 0;
-		int up = 0;
+	vector<vector<int>> generateMatrix(int n) {
+		vector<vector<int>> rst(n, vector<int>(n)); int cur = 1;
+		if (n == 1){ rst[0][0] = 1; return rst; }
+		int left = 0; int right = n - 1; int down = n-1; int up = 0;
 		while (1)
 		{
-			//向右，从matrix[left]走到
-			for (int i = left; i <= right; i ++ ) rst.push_back(matrix[up][i]);
-			if (++up > down) return rst;
-			for (int i = up; i <= down; i++) rst.push_back(matrix[i][right]);
-			if (--right<left) return rst;
-			for (int i = right; i >= left; i--) rst.push_back(matrix[down][i]);
-			if (--down<up)return rst;
-			for (int i = down; i >=up; i--) rst.push_back(matrix[i][left]);
-			if (++left > right) return rst;
+			for (int i = left; i <= right; i++) rst[up][i] = cur++;
+			up++; if (cur > n*n) break;
+			for (int i = up; i <= down; i++) rst[i][right] = cur++;
+			right--; if (cur > n*n) break;
+			for (int i = right; i >= left; i--) rst[down][i] = cur++;
+			down--; if (cur > n*n) break;
+			for (int i = down; i <= up; i--)
+				rst[i][left] = cur++;
+			left++; if (cur > n*n) break;
 		}
 		return rst;
 	}
 };
-
 int main(int argc, char *argv[])
 {
 	vector<vector<int>> test = { { 1, 2, 3,4}, {  5, 6,7,8 }, {  9,10,11,12 } };
 	Solution t;
-	t.spiralOrder(test);
+	t.generateMatrix(3);
 	
 	
 }

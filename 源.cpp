@@ -2528,27 +2528,69 @@ typedef unsigned __int32 uint32_t;
 //		return rst;
 //	}
 //};
+//
+//class Solution {
+//public:
+//	int firstUniqChar(string s) {
+//		map<char, int> coutt; int curindex = -1;
+//		for (int i = 0; i < s.size(); i++)
+//		{
+//			coutt[s[i]]++;
+//		}
+//		for (int i = 0; i < s.size(); i++)
+//		{
+//			if (coutt[s[i]] == 1) return i;
+//		}
+//		return -1;
+//	}
+//};
+
 
 class Solution {
 public:
-	int firstUniqChar(string s) {
-		map<char, int> coutt; int curindex = -1;
-		for (int i = 0; i < s.size(); i++)
+	int evalRPN(vector<string>& tokens) {
+		stack<int> s; int rst = 0;
+		for (int i = 0; i < tokens.size();i++)
 		{
-			coutt[s[i]]++;
+			string str = tokens[i];
+			if (str == "+")
+			{
+				int b = s.top(); s.pop();
+				int a = s.top(); s.pop();
+				rst = a + b;
+				s.push(rst); continue;
+			}
+			if (str == "-")
+			{
+				int b = s.top(); s.pop();
+				int a = s.top(); s.pop();
+				rst = a - b;
+				s.push(rst); continue;
+			}
+			if (str == "*")
+			{
+				int b = s.top(); s.pop();
+				int a = s.top(); s.pop();
+				rst = a*b;
+				s.push(rst); continue;
+			}
+			if (str == "/")
+			{
+				int b = s.top(); s.pop();
+				int a = s.top(); s.pop();
+				rst = a / b;
+				s.push(rst); continue;
+			}
+			s.push(atoi(str.c_str()));
 		}
-		for (int i = 0; i < s.size(); i++)
-		{
-			if (coutt[s[i]] == 1) return i;
-		}
-		return -1;
+		return rst;
 	}
 };
 int main(int argc, char *argv[])
 {
-	vector<vector<int>> test = { { 1, 2, 3,4}, {  5, 6,7,8 }, {  9,10,11,12 } };
+	vector<string> test = { "10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+","5","+" };
 	Solution t;
-	cout<<t.firstUniqChar("loveleetcode");
+	cout << t.evalRPN(test);
 	
 	
 }

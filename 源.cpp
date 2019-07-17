@@ -2545,53 +2545,86 @@ typedef unsigned __int32 uint32_t;
 //	}
 //};
 
+//
+//class Solution {
+//public:
+//	int evalRPN(vector<string>& tokens) {
+//		stack<int> s; int rst = 0;
+//		if (tokens.size() == 1) return atoi(tokens[0].c_str());
+//		for (int i = 0; i < tokens.size();i++)
+//		{
+//			string str = tokens[i];
+//			if (str == "+")
+//			{
+//				int b = s.top(); s.pop();
+//				int a = s.top(); s.pop();
+//				rst = a + b;
+//				s.push(rst); continue;
+//			}
+//			if (str == "-")
+//			{
+//				int b = s.top(); s.pop();
+//				int a = s.top(); s.pop();
+//				rst = a - b;
+//				s.push(rst); continue;
+//			}
+//			if (str == "*")
+//			{
+//				int b = s.top(); s.pop();
+//				int a = s.top(); s.pop();
+//				rst = a*b;
+//				s.push(rst); continue;
+//			}
+//			if (str == "/")
+//			{
+//				int b = s.top(); s.pop();
+//				int a = s.top(); s.pop();
+//				rst = a / b;
+//				s.push(rst); continue;
+//			}
+//			s.push(atoi(str.c_str()));
+//		}
+//		return rst;
+//	}
+//};
 
 class Solution {
 public:
-	int evalRPN(vector<string>& tokens) {
-		stack<int> s; int rst = 0;
-		for (int i = 0; i < tokens.size();i++)
+	bool flag = false;
+	bool wordBreak(string s, vector<string>& wordDict) {
+		int len = s.size(); 
+		if (s.size() == 0 || wordDict.size() == 0) return false;
+			
+		digui(s, 0, len, wordDict);
+		return flag;
+	}
+	void digui(string s, int index, int len, vector<string> wordDict)
+	{
+		if (index == len) 
+			flag = true;
+		if (flag == true) return;
+		for (int i = 0; i < wordDict.size(); i++)
 		{
-			string str = tokens[i];
-			if (str == "+")
-			{
-				int b = s.top(); s.pop();
-				int a = s.top(); s.pop();
-				rst = a + b;
-				s.push(rst); continue;
-			}
-			if (str == "-")
-			{
-				int b = s.top(); s.pop();
-				int a = s.top(); s.pop();
-				rst = a - b;
-				s.push(rst); continue;
-			}
-			if (str == "*")
-			{
-				int b = s.top(); s.pop();
-				int a = s.top(); s.pop();
-				rst = a*b;
-				s.push(rst); continue;
-			}
-			if (str == "/")
-			{
-				int b = s.top(); s.pop();
-				int a = s.top(); s.pop();
-				rst = a / b;
-				s.push(rst); continue;
-			}
-			s.push(atoi(str.c_str()));
+			string curstring = wordDict[i];
+			if (index+curstring.size()>len) continue;
+			else
+				if (s.substr(index, curstring.size()) == curstring)
+				{
+					digui(s, index + curstring.size(), len, wordDict);
+				}
 		}
-		return rst;
 	}
 };
+
 int main(int argc, char *argv[])
 {
+	string s = "catsandog";
+	vector<string> wordDict = { "cats", "dog","sand","and","cat" };
 	vector<string> test = { "10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+","5","+" };
 	Solution t;
-	cout << t.evalRPN(test);
-	
+	/*cout << t.wordBreak(s,wordDict);*/
+	s = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab";
+	cout << s.size() << endl;
 	
 }
 

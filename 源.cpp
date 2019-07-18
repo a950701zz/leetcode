@@ -2616,64 +2616,83 @@ typedef unsigned __int32 uint32_t;
 //	}
 //};
 
-bool greater(int a, int b){ return a > b; }
+
+//class Solution {
+//public:
+//	bool flag = false;
+//	
+//	bool wordBreak(string s, vector<string>& wordDict) {
+//		int len = s.size();
+//		if (s.size() == 0 || wordDict.size() == 0) return false;
+//		vector<int> rem(s.size(), -1);
+//		digui(s, 0, len, wordDict,rem);
+//		return flag;
+//	}
+//	void digui(string s, int index, int len, vector<string> wordDict,vector<int> &rem)
+//	{
+//		if (index == len)
+//			flag = true;
+//		if (flag == true||rem[index]==0) return ;
+//		for (int i = 0; i < wordDict.size(); i++)
+//		{
+//			string curstring = wordDict[i];
+//			if (index + curstring.size()>len) continue;
+//			else
+//				if (s.substr(index, curstring.size()) == curstring)
+//				{
+//					digui(s, index + curstring.size(), len, wordDict, rem);
+//				}
+//		}
+//		if (flag == false) rem[index] = 0;
+//	}
+//};
+
+class Solution {
+public:
+	vector<string> wordBreak(string s, vector<string>& wordDict) {
+		int len = s.size();
+		vector<string> rst; if (s.size() == 0 || wordDict.size() == 0) return rst;
+		vector<int> rem(s.size(), -1); bool thistime = false;
+		digui(s, 0, len, wordDict, rem, "", rst, thistime);
+		return rst;
+	
+	}
+	void digui(string s, int index, int len, vector<string> wordDict, vector<int> &rem,string curs,vector<string>& rst,bool &thistime)
+	{
+		
+		if (index == len) { rst.push_back(curs); thistime = true;  return; }
+		if (rem[index] == 0) 
+			return;
+		for (int i = 0; i < wordDict.size(); i++)
+		{
+			string curs1 = curs;
+			string curstring = wordDict[i];
+			if (index + curstring.size()>len) continue;
+			else
+			{
+				if (s.substr(index, curstring.size()) == curstring)
+				{
+					if (index == 0) curs1 = curstring;
+					else
+						curs1 += " " + curstring;
+					digui(s, index + curstring.size(), len, wordDict, rem, curs1,rst,thistime);
+				}
+			}
+		}
+		if (thistime == false)
+			rem[index] = 0;
+		
+		
+	} 
+};
+
 
 int main(int argc, char *argv[])
 {
-	vector<int> vecTian;
-	vector<int> vecKing;
-	int nValue = 0;
-	int nEven = 0;
-
-	int nCount = 0;
-
-	cin >> nCount;
-
-
-	for (int i = 0; i < nCount; ++i)
-	{
-		int nSpeed = 0;
-		cin >> nSpeed;
-
-		vecTian.push_back(nSpeed);
-	}
-
-
-	for (int i = 0; i < nCount; ++i)
-	{
-		int nSpeed = 0;
-		cin >> nSpeed;
-
-		vecKing.push_back(nSpeed);
-	}
-
-	//按速度快到慢排序
-	sort(vecTian.begin(), vecTian.end(), greater);
-	sort(vecKing.begin(), vecKing.end(), greater);
-
-	vector<int>::iterator titer;
-	vector<int>::iterator kiter;
-	//所谓官大一级压死人,按田忌的马的速度~~在齐王的马中,找到可以欺负的最快的马!
-	for (titer = vecTian.begin(); titer != vecTian.end(); ++titer)
-	{
-		for (kiter = vecKing.begin(); kiter != vecKing.end(); ++kiter)
-		{
-			if ((*titer) > (*kiter))
-			{
-				++nValue;
-				vecKing.erase(kiter);
-				break;
-			}
-			else if ((*titer) == (*kiter))
-			{
-				++nEven;
-				vecKing.erase(kiter);
-				break;
-			}
-		}
-	}
-
-	cout <<  nValue - (nCount - nEven - nValue) << endl;
+	string s = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+	vector<string> wordDict = { "a", "aa", "aaa", "aaaa", "aaaaa" };
+	Solution t;
+	t.wordBreak(s, wordDict);
 }
 	
 

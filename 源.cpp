@@ -2647,52 +2647,89 @@ typedef unsigned __int32 uint32_t;
 //	}
 //};
 
+//class Solution {
+//public:
+//	vector<string> wordBreak(string s, vector<string>& wordDict) {
+//		int len = s.size();
+//		vector<string> rst; if (s.size() == 0 || wordDict.size() == 0) return rst;
+//		vector<int> rem(s.size(), -1); bool thistime = false;
+//		digui(s, 0, len, wordDict, rem, "", rst, thistime);
+//		return rst;
+//	
+//	}
+//	void digui(string s, int index, int len, vector<string> wordDict, vector<int> &rem,string curs,vector<string>& rst,bool &thistime)
+//	{
+//		
+//		if (index == len) { rst.push_back(curs); thistime = true;  return; }
+//		if (rem[index] == 0) 
+//			return;
+//		for (int i = 0; i < wordDict.size(); i++)
+//		{
+//			string curs1 = curs;
+//			string curstring = wordDict[i];
+//			if (index + curstring.size()>len) continue;
+//			else
+//			{
+//				if (s.substr(index, curstring.size()) == curstring)
+//				{
+//					if (index == 0) curs1 = curstring;
+//					else
+//						curs1 += " " + curstring;
+//					digui(s, index + curstring.size(), len, wordDict, rem, curs1,rst,thistime);
+//				}
+//			}
+//		}
+//		if (thistime == false)
+//			rem[index] = 0;
+//		
+//		
+//	} 
+//};
+
 class Solution {
 public:
-	vector<string> wordBreak(string s, vector<string>& wordDict) {
-		int len = s.size();
-		vector<string> rst; if (s.size() == 0 || wordDict.size() == 0) return rst;
-		vector<int> rem(s.size(), -1); bool thistime = false;
-		digui(s, 0, len, wordDict, rem, "", rst, thistime);
+	vector<vector<string>> rst;
+	vector<vector<string>> partition(string s) {
+		vector<string> cur;
+		digui(0, cur, s);
 		return rst;
-	
 	}
-	void digui(string s, int index, int len, vector<string> wordDict, vector<int> &rem,string curs,vector<string>& rst,bool &thistime)
+
+	void digui(int index, vector<string>cur,string s)
 	{
-		
-		if (index == len) { rst.push_back(curs); thistime = true;  return; }
-		if (rem[index] == 0) 
-			return;
-		for (int i = 0; i < wordDict.size(); i++)
+		if (index >= s.size()) {
+			rst.push_back(cur); return;
+		}
+		for (int i = 1; (int)(s.size())-i-index>=0;i++)
 		{
-			string curs1 = curs;
-			string curstring = wordDict[i];
-			if (index + curstring.size()>len) continue;
-			else
-			{
-				if (s.substr(index, curstring.size()) == curstring)
-				{
-					if (index == 0) curs1 = curstring;
-					else
-						curs1 += " " + curstring;
-					digui(s, index + curstring.size(), len, wordDict, rem, curs1,rst,thistime);
-				}
+			string sub = s.substr(index, i);
+			if (isHui(sub) == true) {
+				cur.push_back(sub);
+				digui(index + i, cur, s);
+				cur.pop_back();
 			}
 		}
-		if (thistime == false)
-			rem[index] = 0;
-		
-		
-	} 
-};
+	}
 
+	bool isHui(string s)
+	{
+		int first = 0; int last = s.size()-1;
+		while (first<last)
+		{
+			if (s[first] == s[last]) { first++; last--; continue; }
+			else
+				return false;
+		}
+		return true;
+	}
+};
 
 int main(int argc, char *argv[])
 {
 	string s = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 	vector<string> wordDict = { "a", "aa", "aaa", "aaaa", "aaaaa" };
 	Solution t;
-	t.wordBreak(s, wordDict);
+	t.partition("efe");
 }
 	
 

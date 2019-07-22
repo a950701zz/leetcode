@@ -2725,25 +2725,57 @@ typedef unsigned __int32 uint32_t;
 //};
 
 
+//class Solution {
+//public:
+//	uint32_t reverseBits(uint32_t n) {
+//		uint32_t m = 0;
+//		for (int i = 0; i < 32; i++)
+//		{
+//			m <<= 1;
+//			m = m | (n & 1);
+//			n >>= 1;
+//		}
+//		return m;
+//	}
+//};
+
+
 class Solution {
 public:
-	uint32_t reverseBits(uint32_t n) {
-		uint32_t m = 0;
-		for (int i = 0; i < 32; i++)
-		{
-			m <<= 1;
-			m = m | (n & 1);
-			n >>= 1;
-		}
-		return m;
+	vector<string> rst;
+	vector<string> generateParenthesis(int n) {
+		//每一位都会有两种选择，左括号或者右括号
+		digui(n, 0, 0, "");
+		return rst;
 	}
+	void digui(int n, int right, int left,string curstring)
+	{
+		if (curstring.size() == n*2) { rst.push_back(curstring); }
+
+		
+		if (right < n)
+		{
+			string cur = curstring;
+			cur += "(";
+			digui(n, right + 1, left, cur);
+		}
+
+		if (left < right)
+		{
+			string cur = curstring;
+			cur += ")";
+			digui(n, right, left + 1, cur);
+		}
+	}
+	
 };
+
 int main(int argc, char *argv[])
 {
 	string s = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 	vector<string> wordDict = { "a", "aa", "aaa", "aaaa", "aaaaa" };
 	Solution t;
-	cout << t.reverseBits(43261596);
+	 t.generateParenthesis(3);
 }
 	
 

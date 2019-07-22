@@ -2686,50 +2686,64 @@ typedef unsigned __int32 uint32_t;
 //	} 
 //};
 
+//class Solution {
+//public:
+//	vector<vector<string>> rst;
+//	vector<vector<string>> partition(string s) {
+//		vector<string> cur;
+//		digui(0, cur, s);
+//		return rst;
+//	}
+//
+//	void digui(int index, vector<string>cur,string s)
+//	{
+//		if (index >= s.size()) {
+//			rst.push_back(cur); return;
+//		}
+//		for (int i = 1; (int)(s.size())-i-index>=0;i++)
+//		{
+//			string sub = s.substr(index, i);
+//			if (isHui(sub) == true) {
+//				cur.push_back(sub);
+//				digui(index + i, cur, s);
+//				cur.pop_back();
+//			}
+//		}
+//	}
+//
+//	bool isHui(string s)
+//	{
+//		int first = 0; int last = s.size()-1;
+//		while (first<last)
+//		{
+//			if (s[first] == s[last]) { first++; last--; continue; }
+//			else
+//				return false;
+//		}
+//		return true;
+//	}
+//};
+
+
 class Solution {
 public:
-	vector<vector<string>> rst;
-	vector<vector<string>> partition(string s) {
-		vector<string> cur;
-		digui(0, cur, s);
-		return rst;
-	}
-
-	void digui(int index, vector<string>cur,string s)
-	{
-		if (index >= s.size()) {
-			rst.push_back(cur); return;
-		}
-		for (int i = 1; (int)(s.size())-i-index>=0;i++)
+	uint32_t reverseBits(uint32_t n) {
+		uint32_t m = 0;
+		for (int i = 0; i < 32; i++)
 		{
-			string sub = s.substr(index, i);
-			if (isHui(sub) == true) {
-				cur.push_back(sub);
-				digui(index + i, cur, s);
-				cur.pop_back();
-			}
+			m <<= 1;
+			m = m | (n & 1);
+			n >>= 1;
 		}
-	}
-
-	bool isHui(string s)
-	{
-		int first = 0; int last = s.size()-1;
-		while (first<last)
-		{
-			if (s[first] == s[last]) { first++; last--; continue; }
-			else
-				return false;
-		}
-		return true;
+		return m;
 	}
 };
-
 int main(int argc, char *argv[])
 {
 	string s = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 	vector<string> wordDict = { "a", "aa", "aaa", "aaaa", "aaaaa" };
 	Solution t;
-	t.partition("efe");
+	cout << t.reverseBits(43261596);
 }
 	
 

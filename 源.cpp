@@ -2739,43 +2739,65 @@ typedef unsigned __int32 uint32_t;
 //	}
 //};
 
+//
+//class Solution {
+//public:
+//	vector<string> rst;
+//	vector<string> generateParenthesis(int n) {
+//		//每一位都会有两种选择，左括号或者右括号
+//		digui(n, 0, 0, "");
+//		return rst;
+//	}
+//	void digui(int n, int right, int left,string curstring)
+//	{
+//		if (curstring.size() == n*2) { rst.push_back(curstring); }
+//
+//		
+//		if (right < n)
+//		{
+//			string cur = curstring;
+//			cur += "(";
+//			digui(n, right + 1, left, cur);
+//		}
+//
+//		if (left < right)
+//		{
+//			string cur = curstring;
+//			cur += ")";
+//			digui(n, right, left + 1, cur);
+//		}
+//	}
+//	
+//};
+
 
 class Solution {
 public:
-	vector<string> rst;
-	vector<string> generateParenthesis(int n) {
-		//每一位都会有两种选择，左括号或者右括号
-		digui(n, 0, 0, "");
+	vector<vector<int>> rst;
+	vector<vector<int>> subsets(vector<int>& nums) {
+		vector<int> cur;
+		digui(0, nums, cur);
 		return rst;
 	}
-	void digui(int n, int right, int left,string curstring)
+	void digui(int n, vector<int> nums, vector<int> cur)
 	{
-		if (curstring.size() == n*2) { rst.push_back(curstring); }
-
+		if (n == nums.size() ) { rst.push_back(cur); return; }
+		digui(n + 1, nums, cur);
+		cur.push_back(nums[n]);
+		digui(n + 1, nums, cur);
 		
-		if (right < n)
-		{
-			string cur = curstring;
-			cur += "(";
-			digui(n, right + 1, left, cur);
-		}
-
-		if (left < right)
-		{
-			string cur = curstring;
-			cur += ")";
-			digui(n, right, left + 1, cur);
-		}
 	}
-	
 };
+
+
+
 
 int main(int argc, char *argv[])
 {
 	string s = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-	vector<string> wordDict = { "a", "aa", "aaa", "aaaa", "aaaaa" };
+	vector<int > wordDict = {1,2,3 };
 	Solution t;
-	 t.generateParenthesis(3);
+	t.subsets(wordDict);
 }
 	
 

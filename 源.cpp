@@ -2771,38 +2771,63 @@ typedef unsigned __int32 uint32_t;
 //};
 
 
+//class Solution {
+//public:
+//	vector<vector<int> > subsetsWithDup(vector<int> &S) {
+//
+//		vector<vector<int>> res;
+//		vector<int> path;
+//		sort(S.begin(), S.end());
+//		solve(S, 0, path, res);
+//		return res;
+//	}
+//
+//	void solve(vector<int> S, int index, vector<int> &path, vector<vector<int>> &res)
+//	{
+//		res.push_back(path);
+//		for (int i = index; i < S.size(); i++)
+//		{
+//			if (i != index&&S[i] == S[i - 1])
+//				continue;
+//			path.push_back(S[i]);
+//			solve(S, i + 1, path, res);
+//			path.pop_back();
+//		}
+//	}
+//};
+//	
 class Solution {
 public:
-	vector<vector<int> > subsetsWithDup(vector<int> &S) {
-
-		vector<vector<int>> res;
-		vector<int> path;
-		sort(S.begin(), S.end());
-		solve(S, 0, path, res);
-		return res;
+	vector<vector<int> > result;
+	vector<vector<int> > permute(vector<int> &num) {
+		vector<int> cur;
+		digui(0, num , cur);
+	    return result;
 	}
-
-	void solve(vector<int> S, int index, vector<int> &path, vector<vector<int>> &res)
+	void digui(int index, vector<int> &nums,vector<int> cur)
 	{
-		res.push_back(path);
-		for (int i = index; i < S.size(); i++)
+		if (index == nums.size())
 		{
-			if (i != index&&S[i] == S[i - 1])
-				continue;
-			path.push_back(S[i]);
-			solve(S, i + 1, path, res);
-			path.pop_back();
+			result.push_back(nums);
+			return;
+		}
+
+		for (int i = index; i < nums.size();i++)
+		{
+			swap(nums[i], nums[index]);
+			digui(index + 1, nums, cur);
+			swap(nums[i], nums[index]);
 		}
 	}
+
 };
-	
 
 int main(int argc, char *argv[])
 {
 	string s = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-	vector<int > wordDict = {1,2,2 };
+	vector<int > wordDict = {1,2,3 };
 	Solution t;
-	t.subsetsWithDup(wordDict);
+	t.permute(wordDict);
 	return 1;
 }
 	

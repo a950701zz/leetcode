@@ -2773,31 +2773,37 @@ typedef unsigned __int32 uint32_t;
 
 class Solution {
 public:
-	vector<vector<int>> rst;
-	vector<vector<int>> subsets(vector<int>& nums) {
-		vector<int> cur;
-		digui(0, nums, cur);
-		return rst;
+	vector<vector<int> > subsetsWithDup(vector<int> &S) {
+
+		vector<vector<int>> res;
+		vector<int> path;
+		sort(S.begin(), S.end());
+		solve(S, 0, path, res);
+		return res;
 	}
-	void digui(int n, vector<int> nums, vector<int> cur)
+
+	void solve(vector<int> S, int index, vector<int> &path, vector<vector<int>> &res)
 	{
-		if (n == nums.size() ) { rst.push_back(cur); return; }
-		digui(n + 1, nums, cur);
-		cur.push_back(nums[n]);
-		digui(n + 1, nums, cur);
-		
+		res.push_back(path);
+		for (int i = index; i < S.size(); i++)
+		{
+			if (i != index&&S[i] == S[i - 1])
+				continue;
+			path.push_back(S[i]);
+			solve(S, i + 1, path, res);
+			path.pop_back();
+		}
 	}
 };
-
-
-
+	
 
 int main(int argc, char *argv[])
 {
 	string s = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-	vector<int > wordDict = {1,2,3 };
+	vector<int > wordDict = {1,2,2 };
 	Solution t;
-	t.subsets(wordDict);
+	t.subsetsWithDup(wordDict);
+	return 1;
 }
 	
 

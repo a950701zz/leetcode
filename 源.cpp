@@ -2836,34 +2836,70 @@ typedef unsigned __int32 uint32_t;
 //};
 
 
+//class Solution {
+//public:
+//	int reverse(int x) {
+//		int a, b;
+//		int  rst = 0;
+//		while (x / 10 != 0)
+//		{
+//			int pop = x % 10;
+//			if (rst > INT_MAX / 10 || (rst == INT_MAX / 10 && pop > 7)) return 0;
+//			if (rst < INT_MIN / 10 || (rst == INT_MIN / 10 && pop < -8)) return 0;
+//			rst = rst * 10 + pop;
+//			x = x / 10;
+//		}
+//		if (rst > INT_MAX / 10 || (rst == INT_MAX / 10 && x % 10 > 7)) return 0;
+//		if (rst < INT_MIN / 10 || (rst == INT_MIN / 10 && x % 10 < -8)) return 0;
+//		rst = rst * 10 + x % 10;
+//		return rst;
+//
+//	}
+//};
+
 class Solution {
 public:
-	int reverse(int x) {
-		int a, b;
-		int  rst = 0;
-		while (x / 10 != 0)
+	string addStrings(string num1, string num2) {
+		if (num1.size() == 0) return num2;
+		if (num2.size() == 0) return num1;
+	
+		int index1 = num1.size() - 1; int index2 = num2.size() - 1;
+		stack<char> s;
+		int carry = 0; string rst = "";
+		while (index1>=0||index2>=0)
 		{
-			int pop = x % 10;
-			if (rst > INT_MAX / 10 || (rst == INT_MAX / 10 && pop > 7)) return 0;
-			if (rst < INT_MIN / 10 || (rst == INT_MIN / 10 && pop < -8)) return 0;
-			rst = rst * 10 + pop;
-			x = x / 10;
+			int cur;
+			if (index1>=0&&index2>=0)
+				cur = (num1[index1] - '0') + (num2[index2] - '0') + carry;
+			else if (index1>=0&&index2<0)
+				cur = (num1[index1] - '0') + carry;
+			else if (index1 < 0 && index2>=0)
+				cur = (num2[index2] - '0') + carry;
+			if (cur >= 10) 
+			{
+				carry = 1; cur = cur % 10;
+			}
+			else carry = 0;
+			index1--; index2--;
+			s.push(cur + '0');
 		}
-		if (rst > INT_MAX / 10 || (rst == INT_MAX / 10 && x % 10 > 7)) return 0;
-		if (rst < INT_MIN / 10 || (rst == INT_MIN / 10 && x % 10 < -8)) return 0;
-		rst = rst * 10 + x % 10;
+		if (carry == 1)
+		{
+			s.push('1');
+		}
+		while (s.empty()!=true)
+		{
+			rst += s.top(); s.pop();
+		}
 		return rst;
-
 	}
 };
-
-
 int main(int argc, char *argv[])
 {
 	string s = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 	vector<int > wordDict = {1,2,3 };
 	Solution t;
-	/*t.grayCode(3);*/
+	t.addStrings("1","9");
 	return 1;
 }
 	

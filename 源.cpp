@@ -2796,38 +2796,74 @@ typedef unsigned __int32 uint32_t;
 //	}
 //};
 //	
+//class Solution {
+//public:
+//	vector<vector<int> > result;
+//	vector<vector<int> > permute(vector<int> &num) {
+//		vector<int> cur;
+//		digui(0, num , cur);
+//	    return result;
+//	}
+//	void digui(int index, vector<int> &nums,vector<int> cur)
+//	{
+//		if (index == nums.size())
+//		{
+//			result.push_back(nums);
+//			return;
+//		}
+//
+//		for (int i = index; i < nums.size();i++)
+//		{
+//			swap(nums[i], nums[index]);
+//			digui(index + 1, nums, cur);
+//			swap(nums[i], nums[index]);
+//		}
+//	}
+//
+//};
+
+//class Solution {
+//public:
+//	vector<int> grayCode(int n) {
+//		int size = 1 << n;
+//		vector<int> res;
+//		for (int i = 0; i < size; i++){
+//			int graycode = i ^ (i >> 1);
+//			res.push_back(graycode);
+//		}
+//		return res;
+//	}
+//};
+
+
 class Solution {
 public:
-	vector<vector<int> > result;
-	vector<vector<int> > permute(vector<int> &num) {
-		vector<int> cur;
-		digui(0, num , cur);
-	    return result;
-	}
-	void digui(int index, vector<int> &nums,vector<int> cur)
-	{
-		if (index == nums.size())
+	int reverse(int x) {
+		int a, b;
+		int  rst = 0;
+		while (x / 10 != 0)
 		{
-			result.push_back(nums);
-			return;
+			int pop = x % 10;
+			if (rst > INT_MAX / 10 || (rst == INT_MAX / 10 && pop > 7)) return 0;
+			if (rst < INT_MIN / 10 || (rst == INT_MIN / 10 && pop < -8)) return 0;
+			rst = rst * 10 + pop;
+			x = x / 10;
 		}
+		if (rst > INT_MAX / 10 || (rst == INT_MAX / 10 && x % 10 > 7)) return 0;
+		if (rst < INT_MIN / 10 || (rst == INT_MIN / 10 && x % 10 < -8)) return 0;
+		rst = rst * 10 + x % 10;
+		return rst;
 
-		for (int i = index; i < nums.size();i++)
-		{
-			swap(nums[i], nums[index]);
-			digui(index + 1, nums, cur);
-			swap(nums[i], nums[index]);
-		}
 	}
-
 };
+
 
 int main(int argc, char *argv[])
 {
 	string s = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 	vector<int > wordDict = {1,2,3 };
 	Solution t;
-	t.permute(wordDict);
+	/*t.grayCode(3);*/
 	return 1;
 }
 	

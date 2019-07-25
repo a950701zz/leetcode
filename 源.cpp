@@ -2894,55 +2894,76 @@ typedef unsigned __int32 uint32_t;
 //		return rst;
 //	}
 //};
+//
+//class Solution {
+//public:
+//	string multiply(string num1, string num2) {
+//		map<int, vector<int> > record;
+//		stack <char> srst; string rst;
+//		int index1 = num1.size() - 1; int index2 = num2.size() - 1;
+//		while (index1>=0)
+//		{
+//			while (index2>=0)
+//			{
+//				int cur = (num1[index1]-'0') * (num2[index2]-'0');  //得到一个两位数的数，高位放在index1+index2上，低位index1+index2+1上
+//				vector <int> gao = record[index1 + index2];
+//				vector <int> di = record[index1 + index2 + 1];
+//				gao.push_back(cur / 10);
+//				di.push_back(cur % 10);
+//				record[index1 + index2] = gao;
+//				record[index1 + index2 + 1] = di;
+//				index2--;
+//			}
+//			index2 = num2.size() - 1;
+//			index1--;
+//		}
+//
+//		index1 = num1.size() + num2.size()-1; int carry = 0;
+//		while (index1>=0)
+//		{
+//			vector<int> vec = record[index1];//对index1位的vector累加
+//			int num = 0;
+//			for (int i = 0; i < vec.size() ;i++)
+//			{
+//				num += vec[i];
+//			}
+//			num += carry;
+//			srst.push(num % 10+'0');
+//			carry = num / 10;
+//			index1--;
+//		}
+//		bool first = true;
+//		while (srst.empty()!=true)
+//		{
+//			if (srst.top() == '0'&&first == true) {
+//				srst.pop(); continue;
+//			}
+//			rst = rst + srst.top();
+//			srst.pop();
+//			first = false;
+//		}
+//		return rst == "" ? "0":rst;
+//	}
+//};
 
 class Solution {
 public:
-	string multiply(string num1, string num2) {
-		map<int, vector<int> > record;
-		stack <char> srst; string rst;
-		int index1 = num1.size() - 1; int index2 = num2.size() - 1;
-		while (index1>=0)
+	bool isValid(string s) {
+		int i = 0;
+		while (i < s.length())
 		{
-			while (index2>=0)
+			if (s[i + 1] - s[i] == 1 || s[i + 1] - s[i] == 2)
 			{
-				int cur = (num1[index1]-'0') * (num2[index2]-'0');  //得到一个两位数的数，高位放在index1+index2上，低位index1+index2+1上
-				vector <int> gao = record[index1 + index2];
-				vector <int> di = record[index1 + index2 + 1];
-				gao.push_back(cur / 10);
-				di.push_back(cur % 10);
-				record[index1 + index2] = gao;
-				record[index1 + index2 + 1] = di;
-				index2--;
+				s.replace(i, 2, "");
+				if (i > 0) i--;
 			}
-			index2 = num2.size() - 1;
-			index1--;
-		}
-
-		index1 = num1.size() + num2.size()-1; int carry = 0;
-		while (index1>=0)
-		{
-			vector<int> vec = record[index1];//对index1位的vector累加
-			int num = 0;
-			for (int i = 0; i < vec.size() ;i++)
+			else
 			{
-				num += vec[i];
+				i++;
 			}
-			num += carry;
-			srst.push(num % 10+'0');
-			carry = num / 10;
-			index1--;
 		}
-		bool first = true;
-		while (srst.empty()!=true)
-		{
-			if (srst.top() == '0'&&first == true) {
-				srst.pop(); continue;
-			}
-			rst = rst + srst.top();
-			srst.pop();
-			first = false;
-		}
-		return rst;
+		if (s != "") return false;
+		else return true;
 	}
 };
 int main(int argc, char *argv[])
@@ -2950,7 +2971,7 @@ int main(int argc, char *argv[])
 	string s = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 	vector<int > wordDict = {1,2,3 };
 	Solution t;
-	cout<<t.multiply("0", "0");
+	cout << t.isValid("()[]{}");
 	return 1;
 }
 	
